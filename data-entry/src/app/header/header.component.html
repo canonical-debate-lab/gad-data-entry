@@ -1,0 +1,25 @@
+<mat-toolbar class="mat-elevation-z2" color="primary">
+  <button routerLink="/" mat-button>
+    <h2>Great American Debate - Data Entry</h2>
+  </button>
+  <span fxFlex></span>
+  <div fxLayout="row" fxLayoutGap="1em">
+    <button mat-icon-button [matMenuTriggerFor]="helpMenu">
+      <mat-icon class="icon">help</mat-icon>
+    </button>
+  </div>
+  <mat-menu #helpMenu="matMenu">
+    <button mat-menu-item>Slack</button>
+    <button mat-menu-item>Report Issue</button>
+  </mat-menu>
+  <div fxLayout="row" fxLayoutGap="1em">
+    <button mat-icon-button [matMenuTriggerFor]="userMenu">
+      <mat-icon class="icon">person</mat-icon>
+    </button>
+  </div>
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item>Profile</button>
+    <button mat-menu-item>Settings</button>
+    <button mat-menu-item>Login</button>
+  </mat-menu>
+</mat-toolbar>

@@ -1,0 +1,53 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$md-blue: ( 50: #e5e8ec, 100: #bec7cf, 200: #92a1b0, 300: #667b90, 400: #465f78, 500: #254360, 600: #213d58, 700: #1b344e, 800: #162c44, 900: #0d1e33, A100: #6fa7ff, A200: #3c88ff, A400: #0968ff, A700: #005cef, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #ffffff, 400: #ffffff, 500: #ffffff, 600: #ffffff, 700: #ffffff, 800: #ffffff, 900: #ffffff, A100: #000000, A200: #ffffff, A400: #ffffff, A700: #ffffff, ));
+$md-red: ( 50: #f1e4e4, 100: #dcbcbb, 200: #c5908e, 300: #ad6461, 400: #9c423f, 500: #8a211d, 600: #821d1a, 700: #771815, 800: #6d1411, 900: #5a0b0a, A100: #ff908e, A200: #ff5d5b, A400: #ff2b28, A700: #ff120e, contrast: ( 50: #000000, 100: #000000, 200: #000000, 300: #ffffff, 400: #ffffff, 500: #ffffff, 600: #ffffff, 700: #ffffff, 800: #ffffff, 900: #ffffff, A100: #000000, A200: #000000, A400: #ffffff, A700: #ffffff, ));
+$data-entry-primary: mat-palette($md-blue);
+$data-entry-accent: mat-palette($md-red, 500, A100, A400);
+// The warn palette is optional (defaults to red).
+$data-entry-warn: mat-palette($mat-red);
+@function data-entry-background($color) {
+  @return ( status-bar: map_get($mat-grey, 300), app-bar: map_get($mat-grey, 100), background: map_get($color, 50), hover: rgba(black, 0.04), card: white, dialog: white, disabled-button: rgba(black, 0.12), raised-button: white, focused-button: $dark-focused, selected-button: map_get($mat-grey, 300), selected-disabled-button: map_get($mat-grey, 400), disabled-button-toggle: map_get($mat-grey, 200), unselected-chip: map_get($mat-grey, 300), disabled-list-option: map_get($mat-grey, 200), );
+}
+
+;
+$data-entry-background: data-entry-background($md-blue);
+$background-color: map-get($data-entry-background, background);
+// Create the theme object (a Sass map containing all of the palettes).
+$data-entry-theme: map-merge(mat-light-theme($data-entry-primary, $data-entry-accent, $data-entry-warn), (background: $data-entry-background));
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($data-entry-theme);
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.full-width {
+  width: 100%;
+}
+
+@mixin mat-fill {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+}
