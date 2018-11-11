@@ -9,7 +9,10 @@ import {
   MatListModule,
   MatMenuModule,
   MatStepperModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatChipsModule,
+  MatAutocompleteModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -28,6 +31,9 @@ const modules = [
   MatListModule,
   ReactiveFormsModule,
   FlexLayoutModule,
+  MatChipsModule,
+  MatSnackBarModule,
+  MatAutocompleteModule,
 ];
 
 @NgModule({

@@ -1,0 +1,40 @@
+@import "~@angular/material/theming";
+@import "src/styles.scss";
+:host {
+  flex: 1 1 auto;
+  align-self: auto;
+}
+
+mat-card {
+  padding: 0;
+  padding-bottom: 2em;
+  mat-card-header {
+    padding: 0;
+    padding-right: 16px;
+    margin: 0;
+    h2 {
+      margin: 0;
+    }
+    mat-card-title {
+      margin: 0;
+      padding: 0;
+    }
+  }
+  mat-card-content {
+    padding-left: 0;
+    padding-right: 0;
+    .list {
+      padding: 0;
+      .addForm {
+        width: 100%;
+        height: auto;
+        .add {
+          width: 100%;
+        }
+      }
+      .selected {
+        background-color: map-get($data-entry-primary, 100);
+      }
+    }
+  }
+}

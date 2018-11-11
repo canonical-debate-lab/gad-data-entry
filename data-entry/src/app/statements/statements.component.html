@@ -1,5 +1,8 @@
 <div class="content" fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="2em" fxFlex=100>
-  <mat-card fxFlex=50>Left</mat-card>
+  <!-- <app-statement-list fxFlex=50>Left</app-statement-list> -->
+  <div fxLayout="row" fxFlex=50>
+    <router-outlet></router-outlet>
+  </div>
   <div fxFlex=50 fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="2em">
     <mat-card fxFlex=50>Top</mat-card>
     <mat-card fxFlex=50>Bottom</mat-card>
