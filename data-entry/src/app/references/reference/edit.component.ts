@@ -10,6 +10,7 @@ import { Timestamp } from 'rxjs/internal/operators/timestamp';
 import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 
 import * as moment from 'moment';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-reference-edit',
@@ -87,6 +88,7 @@ export class ReferenceEditComponent implements OnInit {
 
   saveReference() {
     var stm: ReferenceId = this.editForm.value;
+    stm.source_date = new firebase.firestore.Timestamp(moment(this.editForm.get('source_date').value).unix(), 0);
     this.referenceDoc.update(stm);
     this.openSnackBar('Updated', '');
   }

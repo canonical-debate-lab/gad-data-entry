@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Reference, ReferenceId, SourceType } from './types';
+import { Reference, ReferenceId } from './types';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import * as firebase from 'firebase';
