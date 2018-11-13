@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Reference, ReferenceId } from './types';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import * as firebase from 'firebase';
+import * as moment from 'moment';
+import { RouterEvent, NavigationEnd, Router, ActivatedRoute } from '@angular/router';
+import { ReferenceService } from './reference.service';
 
 @Component({
   selector: 'app-reference-list',
@@ -24,6 +26,7 @@ export class ReferenceListComponent implements OnInit {
     private route: ActivatedRoute,
     private db: AngularFirestore,
     private fb: FormBuilder,
+    private svc: ReferenceService,
   ) {
     this.referenceCollection = db.collection<Reference>('references', ref => ref.orderBy('source'));
     this.referenceList = this.referenceCollection.snapshotChanges().pipe(
@@ -37,9 +40,6 @@ export class ReferenceListComponent implements OnInit {
     );
   }
 
-
-
-  selection: any;
   search = '';
   add = '';
 
@@ -50,12 +50,12 @@ export class ReferenceListComponent implements OnInit {
   }
 
   select(item: ReferenceId) {
-    if (this.selection === item.id) {
-      this.selection = null;
+    if (this.svc.selection === item.id) {
+      this.svc.selection = null;
       this.router.navigate(['/references'], { relativeTo: this.route }).catch(err => console.log(err));
       return
     }
-    this.selection = item.id;
+    this.svc.selection = item.id;
     console.log(item);
     this.router.navigate(['edit', item.id], { relativeTo: this.route }).catch(err => console.log(err));
   }
@@ -67,7 +67,7 @@ export class ReferenceListComponent implements OnInit {
     var stm: Reference = {
       source: this.addForm.get('text').value,
       source_type: { name: '' },
-      source_date: new firebase.firestore.Timestamp(0, 0),
+      source_date: new firebase.firestore.Timestamp(moment(moment.now()).unix(), 0),
       source_parent: '',
       source_saved: false,
       authors: '',
@@ -79,6 +79,8 @@ export class ReferenceListComponent implements OnInit {
 
     this.referenceCollection.add(stm).then(v => {
       this.router.navigate(['edit', v.id], { relativeTo: this.route }).catch(err => console.log(err));
+      this.svc.selection = v.id;
     });
+
   }
 }

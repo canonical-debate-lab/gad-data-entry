@@ -32,7 +32,7 @@
         </form>
       </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item *ngFor="let reference of referenceList | async" [ngClass]="{'selected': selection == reference.id}">
+      <mat-list-item *ngFor="let reference of referenceList | async" [ngClass]="{'selected': svc.selection == reference.id}">
         <mat-divider></mat-divider>
         <div fxFlex (click)="select(reference)" fxLayout="row" fxLayoutAlign="start center">
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">

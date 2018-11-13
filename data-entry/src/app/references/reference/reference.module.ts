@@ -6,6 +6,7 @@ import { ReferenceEditComponent } from './edit.component';
 import { MaterialModule } from '../../material.module';
 import { RouterModule } from '@angular/router';
 import { ReferencePlaceholderComponent } from './placeholder.component';
+import { ReferenceService } from './reference.service';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,9 @@ import { ReferencePlaceholderComponent } from './placeholder.component';
     ReferenceListComponent,
     ReferenceEditComponent,
     ReferencePlaceholderComponent,
-  ]
+  ],
+  providers: [
+    ReferenceService,
+  ],
 })
 export class ReferenceModule { }

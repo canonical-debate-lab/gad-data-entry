@@ -11,6 +11,7 @@ import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-mo
 
 import * as moment from 'moment';
 import * as firebase from 'firebase';
+import { ReferenceService } from './reference.service';
 
 @Component({
   selector: 'app-reference-edit',
@@ -39,11 +40,13 @@ export class ReferenceEditComponent implements OnInit {
     private db: AngularFirestore,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
+    private svc: ReferenceService,
   ) {
   }
 
 
-  private sub: any;
+  private sub: Subscription;
+  private routeSub: Subscription;
   ngOnInit() {
     this.editForm = this.fb.group({
       source: ['', [Validators.required]],
@@ -53,6 +56,10 @@ export class ReferenceEditComponent implements OnInit {
       source_saved: [false, []],
       authors: ['', []],
     })
+
+    this.routeSub = this.route.params.subscribe(routeParams => {
+      this.svc.selection = routeParams.id;
+    });
 
     this.sub = this.route.params.subscribe(params => {
       console.log(params['id']);
@@ -74,6 +81,7 @@ export class ReferenceEditComponent implements OnInit {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.routeSub.unsubscribe();
   }
 
   updateForm(from: ReferenceId) {
