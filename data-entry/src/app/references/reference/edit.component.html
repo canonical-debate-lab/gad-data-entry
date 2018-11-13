@@ -1,0 +1,55 @@
+<mat-card fxFlex>
+  <mat-card-header fxLayout="row" fxLayoutAlign="start center">
+    <mat-card-title class="mat-typography" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+      <h2>Edit Reference</h2>
+      <p class="id">{{(reference | async)?.id}}</p>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <form [formGroup]="editForm" fxLayout="column" (keydown.enter)="saveReference()" fxLayoutGap="1em">
+
+      <div fxLayout.gt-xs="row" fxLayoutGap="1em" fxLayoutAlign="start center">
+        <mat-form-field>
+          <mat-select placeholder="Type" formControlName="source_type" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let type of source_types" [value]="type">
+              {{type.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error>Please choose Source Type</mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex>
+          <mat-label>Source</mat-label>
+          <input matInput type="text" formControlName="source" placeholder="Source URL" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="datePicker" placeholder="Source Date" formControlName="source_date">
+          <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+          <mat-datepicker #datePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <mat-checkbox color="primary" formControlName="source_saved">Source URL saved to WayBackMachine</mat-checkbox>
+
+      <mat-form-field fxFlex>
+        <mat-label>Source Parent</mat-label>
+        <input matInput type="text" formControlName="source_parent" placeholder="Source Parent" required>
+        <mat-hint align="start">Institution (if scientific) / News Outlet (if News) / Website Name (if blog of debate)
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Authors</mat-label>
+        <input matInput type="text" formControlName="authors" placeholder="Authors" required>
+      </mat-form-field>
+
+      <div fxLayout="row">
+        <span fxFlex></span>
+        <button mat-raised-button color="primary" type="submit" (click)="saveReference()" [disabled]="!editForm.valid">Save</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

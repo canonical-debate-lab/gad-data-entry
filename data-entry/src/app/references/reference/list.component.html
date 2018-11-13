@@ -1,0 +1,52 @@
+<mat-card fxFlex>
+  <mat-card-header fxLayout="row" fxLayoutAlign="start center">
+    <mat-card-title class="mat-typography">
+      <h2>References</h2>
+    </mat-card-title>
+    <span fxFlex></span>
+    <mat-form-field class="search" floatLabel="never">
+      <input matInput type="text" placeholder="Search" [(ngModel)]="search">
+      <button mat-button *ngIf="!search" matSuffix mat-icon-button aria-label="Search">
+        <mat-icon>search</mat-icon>
+      </button>
+      <button mat-button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="search=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <mat-action-list class="list" #references>
+      <mat-list-item>
+        <form class="addForm" [formGroup]="addForm" (keydown.enter)="addReference()" fxLayout="row" fxLayoutAlign="start center">
+          <mat-form-field class="add" floatLabel="never">
+            <input matInput type="text" placeholder="Add Reference URL (https://canonicaldebate.com)" formControlName="text">
+            <button mat-button *ngIf="addForm.valid" (keydown.enter)="addReference()" matSuffix mat-icon-button
+              aria-label="Clear" (click)="addForm.reset()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <button mat-button [disabled]="!addForm.valid" type="submit" matSuffix mat-icon-button aria-label="Add">
+            <mat-icon>add</mat-icon>
+          </button>
+        </form>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item *ngFor="let reference of referenceList | async" [ngClass]="{'selected': selection == reference.id}">
+        <mat-divider></mat-divider>
+        <div fxFlex (click)="select(reference)" fxLayout="row" fxLayoutAlign="start center">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+            <p class="refType">{{reference.source_type.name}}</p>
+            <p>{{reference.source}}</p>
+          </div>
+          <a mat-icon-button href="{{reference.source}}" target="_blank" rel="noopener noreferrer">
+            <mat-icon class="icon">link</mat-icon>
+          </a>
+        </div>
+        <button mat-icon-button [routerLink]="['edit', reference.id]">
+          <mat-icon class="icon">edit</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-action-list>
+  </mat-card-content>
+</mat-card>

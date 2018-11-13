@@ -12,8 +12,13 @@ import {
   MatToolbarModule,
   MatChipsModule,
   MatAutocompleteModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatTabsModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatSelectModule
 } from '@angular/material';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -29,9 +34,13 @@ const modules = [
   FormsModule,
   MatInputModule,
   MatListModule,
+  MatTabsModule,
+  MatSelectModule,
   ReactiveFormsModule,
   FlexLayoutModule,
   MatChipsModule,
+  MatDatepickerModule,
+  MatMomentDateModule,
   MatSnackBarModule,
   MatAutocompleteModule,
 ];

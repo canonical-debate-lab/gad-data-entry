@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { StatementsModule } from './statements/statements.module';
 import { HeaderModule } from './header/header.module';
+import { ReferencesModule } from './references/references.module';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { HeaderModule } from './header/header.module';
 
     HeaderModule,
     StatementsModule,
+    ReferencesModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "data-entry/dist/data-entry",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

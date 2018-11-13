@@ -45,6 +45,7 @@ export class StatementEditComponent implements OnInit {
     this.editForm = this.fb.group({
       text: ['', [Validators.required]],
       desc: ['', [Validators.required]],
+      action: [false, []],
     })
 
     this.sub = this.route.params.subscribe(params => {

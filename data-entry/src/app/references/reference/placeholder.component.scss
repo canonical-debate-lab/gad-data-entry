@@ -1,0 +1,13 @@
+@import "~@angular/material/theming";
+@import "src/styles.scss";
+:host {
+  flex: 1 1 auto;
+  align-self: auto;
+  height: 100%;
+}
+
+p {
+  color: map-get($data-entry-foreground, disabled);
+  font-weight: 500;
+  font-size: 20px;
+}
