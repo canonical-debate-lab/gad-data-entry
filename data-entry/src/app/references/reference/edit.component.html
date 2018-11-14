@@ -1,8 +1,12 @@
 <mat-card fxFlex>
   <mat-card-header fxLayout="row" fxLayoutAlign="start center">
-    <mat-card-title class="mat-typography" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+    <mat-card-title class="mat-typography" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1em">
       <h2>Edit Reference</h2>
       <p class="id">{{(reference | async)?.id}}</p>
+      <span fxFlex></span>
+      <button mat-icon-button color="primary" aria-label="Close" [routerLink]="['../..']">
+        <mat-icon>close</mat-icon>
+      </button>
     </mat-card-title>
   </mat-card-header>
   <mat-divider></mat-divider>

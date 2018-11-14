@@ -34,7 +34,14 @@ export class ReferenceEditComponent implements OnInit {
   success = false;
 
   source_types: SourceType[] = [
-    { name: 'Example Type' },
+    { name: 'Scholarly Paper' },
+    { name: 'News Article' },
+    { name: 'Blog' },
+    { name: 'Website' },
+    { name: 'Tweet' },
+    { name: 'Facebook Post' },
+    { name: 'Debate Website Post' },
+    { name: 'Other' },
   ];
 
   constructor(

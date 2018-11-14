@@ -17,8 +17,8 @@ var routes = [
         path: 'edit/:id', component: StatementEditComponent, children: [
           { path: '', component: ReferencePlaceholderComponent },
           { path: 'reference/edit/:id', component: ReferenceEditComponent },
-          { path: 'reference/select', component: ReferenceSelectionComponent },
-          { path: 'reference/select/:id', component: ReferenceSelectionComponent },
+          { path: 'reference', component: ReferenceSelectionComponent },
+          { path: 'reference/:id', component: ReferenceSelectionComponent },
         ]
       },
     ]

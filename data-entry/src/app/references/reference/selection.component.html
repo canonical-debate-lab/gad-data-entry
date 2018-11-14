@@ -46,7 +46,7 @@
             <mat-icon class="icon">link</mat-icon>
           </a>
         </div>
-        <button mat-icon-button [routerLink]="['edit', reference.id]">
+        <button mat-icon-button (click)="editReference(reference)">
           <mat-icon class="icon">edit</mat-icon>
         </button>
       </mat-list-item>

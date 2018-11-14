@@ -129,7 +129,12 @@ export class StatementEditComponent implements OnInit {
   }
 
   selectReference() {
-    this.router.navigate(['reference', 'select', this.svc.selectedRefId()], { relativeTo: this.route })
+    console.log('route:', this.route);
+    if (this.svc.selectedRefId() == '') {
+      this.router.navigate(['reference'], { relativeTo: this.route })
+      return;
+    }
+    this.router.navigate(['reference', this.svc.selectedRefId()], { relativeTo: this.route })
   }
 
   editReference() {

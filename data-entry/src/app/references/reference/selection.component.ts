@@ -94,6 +94,10 @@ export class ReferenceSelectionComponent implements OnInit {
       this.router.navigate(['../..', 'edit', v.id], { relativeTo: this.route }).catch(err => console.log(err));
       this.stmSvc.selectedRef = v;
     });
+  }
 
+  editReference(item: ReferenceId) {
+    this.select(item);
+    this.router.navigate(['..', 'edit', item.id], { relativeTo: this.route })
   }
 }

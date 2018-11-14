@@ -15,7 +15,7 @@
     </mat-form-field>
   </mat-card-header>
   <mat-card-content fxFlex="auto" fxLayout="column" fxLayoutAlign="start stretch">
-    <mat-action-list class="addList" #references fxFlex=100>
+    <mat-action-list class="addList" #references>
       <mat-divider></mat-divider>
       <mat-list-item>
         <form class="addForm" [formGroup]="addForm" (keydown.enter)="addReference()" fxLayout="row" fxLayoutAlign="start center">

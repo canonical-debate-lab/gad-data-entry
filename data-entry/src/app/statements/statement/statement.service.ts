@@ -12,14 +12,14 @@ export class StatementService {
   }
 
   selectedId(): string {
-    if (this.selection == null) {
+    if (!this.selection) {
       return '';
     }
     return this.selection.id;
   }
 
   selectedRefId(): string {
-    if (this.selectedRef == null) {
+    if (!this.selectedRef) {
       return '';
     }
     return this.selectedRef.id;
