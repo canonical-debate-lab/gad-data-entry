@@ -53,6 +53,10 @@ body {
   width: 100%;
 }
 
+.iconButton.mat-menu-item .mat-icon {
+  margin-right: 0;
+}
+
 @mixin mat-fill {
   top: 0;
   left: 0;

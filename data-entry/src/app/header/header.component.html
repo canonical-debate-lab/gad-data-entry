@@ -9,7 +9,12 @@
     </button>
   </div>
   <mat-menu #helpMenu="matMenu">
-    <button mat-menu-item>Slack</button>
+    <a class="iconButton" fxLayout="row" fxLayoutAlign="space-between center" href="https://greatamericandebate.slack.com/messages/CE31J4YH1/"
+      target="_blank" rel="noopener noreferrer" mat-menu-item>
+      <div>Slack</div>
+      <span fxFlex></span>
+      <mat-icon class="icon">link</mat-icon>
+    </a>
     <button mat-menu-item>Report Issue</button>
   </mat-menu>
   <div fxLayout="row" fxLayoutGap="1em">

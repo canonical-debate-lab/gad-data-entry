@@ -6,6 +6,18 @@ mat-toolbar {
   height: 55px;
 }
 
+mat-menu {
+  .iconButton.mat-menu-item {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  button {
+    .icon {
+      margin: 0;
+    }
+  }
+}
+
 .two-rows {
   height: 100px;
   padding-top: 0.5em;
