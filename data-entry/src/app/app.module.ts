@@ -16,6 +16,7 @@ import { StatementsModule } from './statements/statements.module';
 import { HeaderModule } from './header/header.module';
 import { ReferencesModule } from './references/references.module';
 import { ContextsModule } from './contexts/contexts.module';
+import { LoginModule } from './login/module';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { ContextsModule } from './contexts/contexts.module';
     MaterialModule,
 
     HeaderModule,
+    LoginModule,
     StatementsModule,
     ReferencesModule,
     ContextsModule,

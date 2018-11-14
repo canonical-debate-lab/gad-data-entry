@@ -77,8 +77,7 @@ export class ContextEditComponent implements OnInit {
   saveContext() {
     var stm: ContextId = this.editForm.value;
     stm.keywords = this.editForm.get('name').value.toLowerCase().split(' ')
-    this.contextDoc.update(stm);
-    this.openSnackBar('Updated', '');
+    this.contextDoc.update(stm).then(_ => this.openSnackBar('Updated', '')).catch(err => this.openSnackBar('please login', ''));
   }
 
   openSnackBar(message: string, action: string) {

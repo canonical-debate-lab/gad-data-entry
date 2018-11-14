@@ -115,8 +115,7 @@ export class StatementEditComponent implements OnInit {
     var stm: StatementId = this.editForm.value;
     stm.contexts = this.contexts.map(value => { console.log(value); return value.docRef; });
     stm.ref = this.svc.selectedRef;
-    this.statementDoc.update(stm);
-    this.openSnackBar('Updated', '');
+    this.statementDoc.update(stm).then(_ => this.openSnackBar('Updated', '')).catch(err => this.openSnackBar('please login', ''));
   }
 
   openSnackBar(message: string, action: string) {

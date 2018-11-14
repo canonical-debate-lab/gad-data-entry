@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-header',
@@ -10,5 +11,6 @@ export class HeaderComponent {
 
   constructor(
     private router: Router,
+    public afAuth: AngularFireAuth,
   ) { }
 }

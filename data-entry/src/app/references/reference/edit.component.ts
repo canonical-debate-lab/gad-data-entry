@@ -103,8 +103,7 @@ export class ReferenceEditComponent implements OnInit {
   saveReference() {
     var stm: ReferenceId = this.editForm.value;
     stm.source_date = new firebase.firestore.Timestamp(moment(this.editForm.get('source_date').value).unix(), 0);
-    this.referenceDoc.update(stm);
-    this.openSnackBar('Updated', '');
+    this.referenceDoc.update(stm).then(_ => this.openSnackBar('Updated', '')).catch(err => this.openSnackBar('please login', ''));
   }
 
   newStatement() {

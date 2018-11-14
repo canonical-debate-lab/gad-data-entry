@@ -1,0 +1,4 @@
+<button *ngIf="afAuth.user | async as user; else showLogin" mat-menu-item (click)="logout()">Logout</button>
+<ng-template #showLogin>
+  <button mat-menu-item (click)="login()">Login</button>
+</ng-template>
