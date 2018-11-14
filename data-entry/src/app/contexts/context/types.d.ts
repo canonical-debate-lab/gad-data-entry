@@ -1,16 +1,18 @@
 import { DocumentReference } from "@angular/fire/firestore";
 
-export interface Statement {
-  text: string;
+import * as firebase from 'firebase';
+
+export interface Context {
+  name: string;
   desc: string;
-  ref: DocumentReference;
-  contexts: DocumentReference[];
+  url: string;
+  keywords: string[];
   created_at: string;
   created_by: string;
   updated_at: string;
   updated_by: string;
 }
-export interface StatementId extends Statement {
+export interface ContextId extends Context {
   id: string;
   docRef: DocumentReference;
 }

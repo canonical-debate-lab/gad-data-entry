@@ -5,7 +5,7 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from
 import { Observable } from 'rxjs';
 import { map, startWith, debounceTime, switchMap, filter } from 'rxjs/operators';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
-import { ContextId, Context } from '../statement/types';
+import { ContextId, Context } from '../../contexts/context/types';
 
 /**
  * @title Chips Autocomplete
@@ -71,8 +71,15 @@ export class ContextInput {
       if (value) {
         var ctx: Context = {
           name: value,
+          desc: '',
+          url: '',
           keywords: value.toLowerCase().split(' '),
+          created_at: Date.now().toString(),
+          created_by: '',
+          updated_at: Date.now().toString(),
+          updated_by: '',
         };
+        // TODO(kwiesmueller): Open Context for further editing!
 
         this.contextCollection.add(ctx).then(v => {
           var newCtx: ContextId = {

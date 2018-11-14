@@ -1,0 +1,55 @@
+@import "~@angular/material/theming";
+@import "src/styles.scss";
+mat-card {
+  padding: 0;
+  padding-bottom: 0.5em;
+  max-height: calc(100vh - 165px);
+  mat-card-header {
+    padding: 0;
+    padding-right: 16px;
+    margin: 0;
+    h2 {
+      margin: 0;
+    }
+    mat-card-title {
+      margin: 0;
+      padding: 0;
+    }
+  }
+  mat-card-content {
+    padding-left: 0;
+    padding-right: 0;
+    .addList {
+      .addForm {
+        width: 100%;
+        height: auto;
+        .add {
+          width: 100%;
+        }
+      }
+    }
+    .list::-webkit-scrollbar {
+      display: none;
+    }
+    .list {
+      padding: 0;
+      overflow: scroll;
+      .selected {
+        background-color: map-get($data-entry-primary, 100);
+      }
+    }
+  }
+  .refType {
+    background-color: $background-color;
+    border-radius: 2px;
+    width: auto;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    padding: 0.25em 0.5em;
+    min-width: 4em;
+    max-width: 8em;
+    text-overflow: clip;
+  }
+}

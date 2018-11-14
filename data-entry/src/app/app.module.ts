@@ -15,6 +15,7 @@ import { MaterialModule } from './material.module';
 import { StatementsModule } from './statements/statements.module';
 import { HeaderModule } from './header/header.module';
 import { ReferencesModule } from './references/references.module';
+import { ContextsModule } from './contexts/contexts.module';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { ReferencesModule } from './references/references.module';
     HeaderModule,
     StatementsModule,
     ReferencesModule,
+    ContextsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

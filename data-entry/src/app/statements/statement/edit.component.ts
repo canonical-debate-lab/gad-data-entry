@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Statement, StatementId, Context, ContextId } from './types';
+import { Statement, StatementId } from './types';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from '@angular/fire/firestore';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map, switchMap, filter } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material';
 import { StatementService } from './statement.service';
+import { Context, ContextId } from 'src/app/contexts/context/types';
 
 @Component({
   selector: 'app-statement-edit',

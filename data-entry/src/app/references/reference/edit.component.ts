@@ -12,6 +12,7 @@ import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-mo
 import * as moment from 'moment';
 import * as firebase from 'firebase';
 import { ReferenceService } from './reference.service';
+import { Statement } from 'src/app/statements/statement/types';
 
 @Component({
   selector: 'app-reference-edit',
@@ -26,6 +27,7 @@ export class ReferenceEditComponent implements OnInit {
 
   private referenceDoc: AngularFirestoreDocument<Reference>;
   reference: Observable<ReferenceId>;
+  private statementCollection: AngularFirestoreCollection<Statement>;
 
   editForm: FormGroup;
   loading = false;
@@ -37,16 +39,17 @@ export class ReferenceEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private db: AngularFirestore,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private svc: ReferenceService,
   ) {
+    this.statementCollection = db.collection<Statement>('statements', ref => ref.orderBy('text'));
   }
 
 
   private sub: Subscription;
-  private routeSub: Subscription;
   ngOnInit() {
     this.editForm = this.fb.group({
       source: ['', [Validators.required]],
@@ -56,11 +59,6 @@ export class ReferenceEditComponent implements OnInit {
       source_saved: [false, []],
       authors: ['', []],
     })
-
-    this.routeSub = this.route.params.subscribe(routeParams => {
-      this.svc.selection = routeParams.id;
-      console.log('route param:', routeParams.id);
-    });
 
     this.sub = this.route.params.subscribe(params => {
       console.log(params['id']);
@@ -72,6 +70,7 @@ export class ReferenceEditComponent implements OnInit {
           const id = action.payload.id;
           const docRef = action.payload.ref;
           console.log(data);
+          this.svc.selection = { id, docRef, ...data };
           this.updateForm({ id, docRef, ...data });
 
           return { id, docRef, ...data };
@@ -82,7 +81,6 @@ export class ReferenceEditComponent implements OnInit {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
-    this.routeSub.unsubscribe();
   }
 
   updateForm(from: ReferenceId) {
@@ -100,6 +98,25 @@ export class ReferenceEditComponent implements OnInit {
     stm.source_date = new firebase.firestore.Timestamp(moment(this.editForm.get('source_date').value).unix(), 0);
     this.referenceDoc.update(stm);
     this.openSnackBar('Updated', '');
+  }
+
+  newStatement() {
+    if (!this.editForm.valid) { return; }
+    if (this.svc.selectedId() == '') { return; }
+    var stm: Statement = {
+      text: '',
+      desc: '',
+      contexts: [],
+      created_at: Date.now().toString(),
+      created_by: '',
+      ref: this.svc.selection.docRef,
+      updated_at: Date.now().toString(),
+      updated_by: '',
+    };
+
+    this.statementCollection.add(stm).then(v => {
+      this.router.navigate(['/', 'statements', 'edit', v.id, 'reference', 'edit', this.svc.selectedId()], { relativeTo: this.route }).catch(err => console.log(err));
+    });
   }
 
   openSnackBar(message: string, action: string) {

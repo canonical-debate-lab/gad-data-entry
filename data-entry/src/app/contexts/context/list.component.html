@@ -1,7 +1,7 @@
-<mat-card fxFlex fxLayout="column" fxLayoutAlign="start stretch">
+<mat-card fxFlex fxLayout="column" fxLayoutAlign="start stretch" fxFlex=100>
   <mat-card-header fxLayout="row" fxLayoutAlign="start center">
     <mat-card-title class="mat-typography">
-      <h2>References</h2>
+      <h2>Contexts</h2>
     </mat-card-title>
     <span fxFlex></span>
     <mat-form-field class="search" floatLabel="never">
@@ -15,38 +15,37 @@
     </mat-form-field>
   </mat-card-header>
   <mat-card-content fxFlex="auto" fxLayout="column" fxLayoutAlign="start stretch">
-    <mat-action-list class="addList" #references fxFlex=100>
+    <mat-action-list class="addList" #contexts fxFlex=100>
       <mat-divider></mat-divider>
       <mat-list-item>
-        <form class="addForm" [formGroup]="addForm" (keydown.enter)="addReference()" fxLayout="row" fxLayoutAlign="start center">
+        <form class="addForm" [formGroup]="addForm" (keydown.enter)="addContext()" fxLayout="row" fxLayoutAlign="start center">
           <mat-form-field class="add" floatLabel="never">
-            <input matInput type="text" placeholder="Add Reference URL (https://canonicaldebate.com)" formControlName="text">
-            <button mat-button *ngIf="addForm.valid" (keydown.enter)="addReference()" matSuffix mat-icon-button
+            <input matInput type="text" placeholder="Add Context Name" formControlName="text">
+            <button mat-button *ngIf="addForm.valid" (keydown.enter)="addContext()" matSuffix mat-icon-button
               aria-label="Clear" (click)="addForm.reset()">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
-          <button mat-button [disabled]="!addForm.valid" type="submit" (click)="addReference()" matSuffix
-            mat-icon-button aria-label="Add">
+          <button mat-button [disabled]="!addForm.valid" type="submit" (click)="addContext()" matSuffix mat-icon-button
+            aria-label="Add">
             <mat-icon>add</mat-icon>
           </button>
         </form>
       </mat-list-item>
       <mat-divider></mat-divider>
     </mat-action-list>
-    <mat-action-list class="list" #references fxFlex=100>
-      <mat-list-item *ngFor="let reference of referenceList | async" [ngClass]="{'selected': svc.selectedId() == reference.id}">
+    <mat-action-list class="list" #contexts fxFlex=100>
+      <mat-list-item *ngFor="let context of contextList | async" [ngClass]="{'selected': svc.selection == context.id}">
         <mat-divider></mat-divider>
-        <div fxFlex (click)="select(reference)" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex (click)="select(context)" fxLayout="row" fxLayoutAlign="start center">
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
-            <p fxFlex="noshrink" class="refType">{{reference.source_type.name}}</p>
-            <p class="refText">{{reference.source}}</p>
+            <p class="refText">{{context.name}}</p>
           </div>
-          <a mat-icon-button href="{{reference.source}}" target="_blank" rel="noopener noreferrer">
-            <mat-icon class="icon">link</mat-icon>
-          </a>
         </div>
-        <button mat-icon-button [routerLink]="['edit', reference.id]">
+        <a mat-icon-button href="{{context.url}}" target="_blank" rel="noopener noreferrer">
+          <mat-icon class="icon">link</mat-icon>
+        </a>
+        <button mat-icon-button [routerLink]="['edit', context.id]">
           <mat-icon class="icon">edit</mat-icon>
         </button>
       </mat-list-item>

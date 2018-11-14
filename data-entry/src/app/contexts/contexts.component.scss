@@ -1,6 +1,7 @@
 :host {
   flex: 1 1 auto;
   align-self: auto;
+  width: 100%;
 }
 
 .content {
@@ -9,6 +10,6 @@
   width: 100%;
 }
 
-app-reference-list {
+app-context-list {
   width: 100%;
 }
