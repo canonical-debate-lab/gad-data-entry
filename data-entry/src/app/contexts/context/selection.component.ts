@@ -78,6 +78,7 @@ export class ContextSelectionComponent implements OnInit {
       name: this.addForm.get('name').value,
       desc: '',
       url: '',
+      keywords: this.addForm.get('name').value.toLowerCase().split(' '),
       created_at: Date.now().toString(),
       created_by: '',
       updated_at: Date.now().toString(),
