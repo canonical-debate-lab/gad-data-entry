@@ -4,9 +4,10 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument,
 import { Router, ActivatedRoute } from '@angular/router';
 import { map, switchMap, filter } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material';
+import { StatementService } from './statement.service';
 
 @Component({
   selector: 'app-statement-edit',
@@ -32,9 +33,11 @@ export class StatementEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private db: AngularFirestore,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
+    public svc: StatementService,
   ) {
     // hmm it wont let me scroll away from way your cursor is XD
   }
@@ -45,11 +48,11 @@ export class StatementEditComponent implements OnInit {
     this.editForm = this.fb.group({
       text: ['', [Validators.required]],
       desc: ['', [Validators.required]],
+      ref: new FormControl({ value: '', disabled: true }, Validators.required),
       action: [false, []],
     })
 
     this.sub = this.route.params.subscribe(params => {
-      console.log(params['id']);
       this.statementDoc = this.db.doc<Statement>('statements/' + params['id']);
       console.log(this.statementDoc);
       this.statement = this.statementDoc.snapshotChanges().pipe(
@@ -58,8 +61,9 @@ export class StatementEditComponent implements OnInit {
           const id = action.payload.id;
           const docRef = action.payload.ref;
           console.log(data);
+          this.svc.selection = { id, docRef, ...data };
+          this.svc.selectedRef = data.ref;
           this.updateForm({ id, docRef, ...data });
-
           return { id, docRef, ...data };
         })
       );
@@ -103,11 +107,13 @@ export class StatementEditComponent implements OnInit {
 
   updateForm(from: StatementId) {
     this.editForm.patchValue(from);
+    this.editForm.patchValue({ ref: from.ref.path });
   }
 
   saveStatement() {
     var stm: StatementId = this.editForm.value;
     stm.contexts = this.contexts.map(value => { console.log(value); return value.docRef; });
+    stm.ref = this.svc.selectedRef;
     this.statementDoc.update(stm);
     this.openSnackBar('Updated', '');
   }
@@ -120,4 +126,13 @@ export class StatementEditComponent implements OnInit {
       verticalPosition: 'bottom',
     });
   }
+
+  selectReference() {
+    this.router.navigate(['reference', 'select', this.svc.selectedRefId()], { relativeTo: this.route })
+  }
+
+  editReference() {
+    this.router.navigate(['reference', 'edit', this.svc.selectedRef.id], { relativeTo: this.route })
+  }
+
 }

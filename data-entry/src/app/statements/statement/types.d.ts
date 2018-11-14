@@ -3,7 +3,7 @@ import { DocumentReference } from "@angular/fire/firestore";
 export interface Statement {
   text: string;
   desc: string;
-  ref: string;
+  ref: DocumentReference;
   contexts: DocumentReference[];
   created_at: string;
   created_by: string;

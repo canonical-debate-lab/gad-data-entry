@@ -59,6 +59,7 @@ export class ReferenceEditComponent implements OnInit {
 
     this.routeSub = this.route.params.subscribe(routeParams => {
       this.svc.selection = routeParams.id;
+      console.log('route param:', routeParams.id);
     });
 
     this.sub = this.route.params.subscribe(params => {

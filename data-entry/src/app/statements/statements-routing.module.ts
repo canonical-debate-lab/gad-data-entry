@@ -4,13 +4,23 @@ import { StatementsComponent } from './statements.component';
 import { StatementModule } from './statement/statement.module';
 import { StatementListComponent } from './statement/list.component';
 import { StatementEditComponent } from './statement/edit.component';
+import { ReferencePlaceholderComponent } from '../references/reference/placeholder.component';
+import { ReferenceEditComponent } from '../references/reference/edit.component';
+import { ReferenceListComponent } from '../references/reference/list.component';
+import { ReferenceSelectionComponent } from '../references/reference/selection.component';
 
 var routes = [
   {
     path: 'statements', component: StatementsComponent, children: [
       { path: '', component: StatementListComponent },
-      { path: 'edit/:id', component: StatementEditComponent },
-      { path: 'add/:text', component: StatementEditComponent },
+      {
+        path: 'edit/:id', component: StatementEditComponent, children: [
+          { path: '', component: ReferencePlaceholderComponent },
+          { path: 'reference/edit/:id', component: ReferenceEditComponent },
+          { path: 'reference/select', component: ReferenceSelectionComponent },
+          { path: 'reference/select/:id', component: ReferenceSelectionComponent },
+        ]
+      },
     ]
   },
 ];

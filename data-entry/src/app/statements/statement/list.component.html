@@ -1,46 +1,56 @@
-<mat-card fxFlex>
-  <mat-card-header fxLayout="row" fxLayoutAlign="start center">
-    <mat-card-title class="mat-typography">
-      <h2>Statements</h2>
-    </mat-card-title>
-    <span fxFlex></span>
-    <mat-form-field class="search" floatLabel="never">
-      <input matInput type="text" placeholder="Search" [(ngModel)]="search">
-      <button mat-button *ngIf="!search" matSuffix mat-icon-button aria-label="Search">
-        <mat-icon>search</mat-icon>
-      </button>
-      <button mat-button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="search=''">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field>
-  </mat-card-header>
-  <mat-divider></mat-divider>
-  <mat-card-content>
-    <mat-action-list class="list" #statements>
-      <mat-list-item>
-        <form class="addForm" [formGroup]="addForm" (keydown.enter)="addStatement()" fxLayout="row" fxLayoutAlign="start center">
-          <mat-form-field class="add" floatLabel="never">
-            <input matInput type="text" placeholder="Add" formControlName="text">
-            <button mat-button *ngIf="addForm.valid" (keydown.enter)="addStatement()" matSuffix mat-icon-button
-              aria-label="Clear" (click)="addForm.reset()">
-              <mat-icon>close</mat-icon>
-            </button>
-          </mat-form-field>
-          <button mat-button [disabled]="!addForm.valid" type="submit" matSuffix mat-icon-button aria-label="Add">
-            <mat-icon>add</mat-icon>
+<div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="2em" fxFlex=100>
+  <div fxLayout="row" fxFlex=50>
+    <mat-card fxFlex fxLayout="column" fxLayoutAlign="start stretch">
+      <mat-card-header fxLayout="row" fxLayoutAlign="start center">
+        <mat-card-title class="mat-typography">
+          <h2>Statements</h2>
+        </mat-card-title>
+        <span fxFlex></span>
+        <mat-form-field class="search" floatLabel="never">
+          <input matInput type="text" placeholder="Search" [(ngModel)]="search">
+          <button mat-button *ngIf="!search" matSuffix mat-icon-button aria-label="Search">
+            <mat-icon>search</mat-icon>
           </button>
-        </form>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item *ngFor="let statement of statementList | async" [ngClass]="{'selected': selection == statement.id}">
-        <mat-divider></mat-divider>
-        <div fxFlex (click)="select(statement)">
-          <p>{{statement.text}}</p>
-        </div>
-        <button mat-icon-button [routerLink]="['edit', statement.id]">
-          <mat-icon class="icon">edit</mat-icon>
-        </button>
-      </mat-list-item>
-    </mat-action-list>
-  </mat-card-content>
-</mat-card>
+          <button mat-button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="search=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </mat-card-header>
+      <mat-card-content fxFlex="auto" fxLayout="column" fxLayoutAlign="start stretch">
+        <mat-action-list class="addList" #references fxFlex=100>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <form class="addForm" [formGroup]="addForm" (keydown.enter)="addStatement()" fxLayout="row" fxLayoutAlign="start center">
+              <mat-form-field class="add" floatLabel="never">
+                <input matInput type="text" placeholder="Add Statement" formControlName="text">
+                <button mat-button *ngIf="addForm.valid" (keydown.enter)="addStatement()" matSuffix mat-icon-button
+                  aria-label="Clear" (click)="addForm.reset()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+              <button mat-button [disabled]="!addForm.valid" type="submit" (click)="addStatement()" matSuffix
+                mat-icon-button aria-label="Add">
+                <mat-icon>add</mat-icon>
+              </button>
+            </form>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </mat-action-list>
+        <mat-action-list class="list" #references fxFlex=100>
+          <mat-list-item *ngFor="let statement of statementList | async" [ngClass]="{'selected': svc.selectedId() == statement.id}">
+            <mat-divider></mat-divider>
+            <div fxFlex (click)="select(statement)">
+              <p>{{statement.text}}</p>
+            </div>
+            <button mat-icon-button [routerLink]="['edit', statement.id]">
+              <mat-icon class="icon">edit</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-action-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex=50>
+    <router-outlet></router-outlet>
+  </div>
+</div>

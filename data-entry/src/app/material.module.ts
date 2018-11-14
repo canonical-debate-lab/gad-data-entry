@@ -16,7 +16,8 @@ import {
   MatTabsModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSelectModule
+  MatSelectModule,
+  MatRippleModule
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -28,6 +29,7 @@ const modules = [
   MatButtonModule,
   MatCheckboxModule,
   MatMenuModule,
+  MatRippleModule,
   MatIconModule,
   MatFormFieldModule,
   MatStepperModule,

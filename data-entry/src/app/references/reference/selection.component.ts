@@ -9,13 +9,14 @@ import * as firebase from 'firebase';
 import * as moment from 'moment';
 import { RouterEvent, NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 import { ReferenceService } from './reference.service';
+import { StatementService } from 'src/app/statements/statement/statement.service';
 
 @Component({
-  selector: 'app-reference-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  selector: 'app-reference-selection',
+  templateUrl: './selection.component.html',
+  styleUrls: ['./selection.component.scss']
 })
-export class ReferenceListComponent implements OnInit {
+export class ReferenceSelectionComponent implements OnInit {
 
   private referenceCollection: AngularFirestoreCollection<Reference>;
   referenceList: Observable<ReferenceId[]>;
@@ -27,6 +28,7 @@ export class ReferenceListComponent implements OnInit {
     private db: AngularFirestore,
     private fb: FormBuilder,
     private svc: ReferenceService,
+    private stmSvc: StatementService,
   ) {
     this.referenceCollection = db.collection<Reference>('references', ref => ref.orderBy('source'));
     this.referenceList = this.referenceCollection.snapshotChanges().pipe(
@@ -40,6 +42,7 @@ export class ReferenceListComponent implements OnInit {
     );
   }
 
+  routeId: string;
   search = '';
   add = '';
 
@@ -48,25 +51,31 @@ export class ReferenceListComponent implements OnInit {
     this.addForm = this.fb.group({
       text: ['', [Validators.required]],
     })
+
+    this.routeSub = this.route.params.subscribe(routeParams => {
+      this.routeId = routeParams.id;
+      console.log('route param:', routeParams.id);
+    });
   }
 
   ngOnDestroy(): void {
+    this.routeSub.unsubscribe();
   }
 
   select(item: ReferenceId) {
     if (this.svc.selectedId() === item.id) {
-      this.svc.selection = null;
-      this.router.navigate(['.'], { relativeTo: this.route }).catch(err => console.log(err));
       return
     }
     this.svc.selection = item;
     console.log(item);
-    this.router.navigate(['edit', item.id], { relativeTo: this.route }).catch(err => console.log(err));
+    this.stmSvc.selectedRef = this.svc.selection.docRef;
+    this.router.navigate(['..', item.id], { relativeTo: this.route }).catch(err => console.log(err));
   }
 
 
 
   addReference() {
+    console.log('preparing new ref:', this.addForm.get('text').value);
     if (!this.addForm.valid) { return; }
     var stm: Reference = {
       source: this.addForm.get('text').value,
@@ -80,9 +89,10 @@ export class ReferenceListComponent implements OnInit {
       updated_at: Date.now().toString(),
       updated_by: '',
     };
-
+    console.log('adding ref:', stm);
     this.referenceCollection.add(stm).then(v => {
-      this.router.navigate(['edit', v.id], { relativeTo: this.route }).catch(err => console.log(err));
+      this.router.navigate(['../..', 'edit', v.id], { relativeTo: this.route }).catch(err => console.log(err));
+      this.stmSvc.selectedRef = v;
     });
 
   }

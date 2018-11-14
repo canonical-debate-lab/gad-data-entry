@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Statement, StatementId } from './types';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { StatementService } from './statement.service';
 
 @Component({
   selector: 'app-statement-list',
@@ -22,6 +23,7 @@ export class StatementListComponent implements OnInit {
     private route: ActivatedRoute,
     private db: AngularFirestore,
     private fb: FormBuilder,
+    private svc: StatementService,
   ) {
     this.statementCollection = db.collection<Statement>('statements', ref => ref.orderBy('text'));
     this.statementList = this.statementCollection.snapshotChanges().pipe(
@@ -35,9 +37,6 @@ export class StatementListComponent implements OnInit {
     );
   }
 
-
-
-  selection: any;
   search = '';
   add = '';
 
@@ -48,11 +47,11 @@ export class StatementListComponent implements OnInit {
   }
 
   select(item: StatementId) {
-    if (this.selection === item.id) {
-      this.selection = null;
+    if (this.svc.selectedId() === item.id) {
+      this.svc.selection = null;
       return
     }
-    this.selection = item.id;
+    this.svc.selection = item;
     console.log(item);
   }
 
@@ -66,7 +65,7 @@ export class StatementListComponent implements OnInit {
       contexts: [],
       created_at: Date.now().toString(),
       created_by: '',
-      ref: '',
+      ref: null,
       updated_at: Date.now().toString(),
       updated_by: '',
     };

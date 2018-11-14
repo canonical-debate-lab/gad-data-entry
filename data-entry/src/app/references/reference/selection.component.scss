@@ -1,5 +1,7 @@
 @import "~@angular/material/theming";
 @import "src/styles.scss";
+@import "~@angular/material/theming";
+@import "src/styles.scss";
 mat-card {
   padding: 0;
   padding-bottom: 0.5em;
@@ -34,7 +36,8 @@ mat-card {
     .list {
       padding: 0;
       overflow: scroll;
-      .selected {
+      .selected,
+      .routeSelected {
         background-color: map-get($data-entry-primary, 100);
       }
     }

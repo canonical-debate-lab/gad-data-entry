@@ -1,9 +1,13 @@
 .spacer {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+  height: 55px;
 }
 
 .two-rows {
-    height: 100px;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
+  height: 100px;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }

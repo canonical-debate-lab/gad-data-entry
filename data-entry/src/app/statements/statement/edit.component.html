@@ -1,35 +1,63 @@
-<mat-card fxFlex>
-  <mat-card-header fxLayout="row" fxLayoutAlign="start center">
-    <mat-card-title class="mat-typography" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
-      <h2>Edit Statement</h2>
-      <p class="id">{{(statement | async)?.id}}</p>
-    </mat-card-title>
-  </mat-card-header>
-  <mat-divider></mat-divider>
-  <mat-card-content>
-    <form [formGroup]="editForm" fxLayout="column" (keydown.enter)="saveStatement()" fxLayoutGap="1em">
+<div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="2em" fxFlex=100>
+  <div fxLayout="row" fxFlex=50>
+    <mat-card fxFlex>
+      <mat-card-header fxLayout="row" fxLayoutAlign="start center">
+        <mat-card-title class="mat-typography" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1em">
+          <h2>Edit Statement</h2>
+          <p class="id">{{(statement | async)?.id}}</p>
+          <span fxFlex></span>
+          <button mat-icon-button color="primary" aria-label="Close" [routerLink]="['/statements']">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <form [formGroup]="editForm" fxLayout="column" (keydown.enter)="saveStatement()" fxLayoutGap="1em">
 
-      <div fxLayout.gt-xs="row" fxLayoutGap="1em" fxLayoutAlign="start center">
-        <mat-form-field fxFlex>
-          <mat-label>Text</mat-label>
-          <input matInput type="text" formControlName="text" placeholder="Text" required>
-        </mat-form-field>
+          <div fxLayout.gt-xs="row" fxLayoutGap="1em" fxLayoutAlign="start center">
+            <mat-form-field fxFlex>
+              <mat-label>Text</mat-label>
+              <input matInput type="text" formControlName="text" placeholder="Text" required>
+            </mat-form-field>
 
-        <mat-checkbox color="primary" formControlName="action">Action</mat-checkbox>
-      </div>
+            <mat-checkbox color="primary" formControlName="action">Action</mat-checkbox>
+          </div>
 
-      <mat-form-field>
-        <mat-label>Description</mat-label>
-        <textarea matInput type="text" formControlName="desc" placeholder="Description" required></textarea>
-        <mat-hint align="start">Press Shift+Enter for a new line</mat-hint>
-      </mat-form-field>
+          <mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea matInput type="text" formControlName="desc" placeholder="Description" required></textarea>
+            <mat-hint align="start">Press Shift+Enter for a new line</mat-hint>
+          </mat-form-field>
 
-      <app-context-input [contexts]="contexts"></app-context-input>
+          <app-context-input [contexts]="contexts"></app-context-input>
 
-      <div fxLayout="row">
-        <span fxFlex></span>
-        <button mat-raised-button color="primary" type="submit" (click)="saveStatement()" [disabled]="!editForm.valid">Save</button>
-      </div>
-    </form>
-  </mat-card-content>
-</mat-card>
+          <div class="refField" fxLayout.gt-xs="row" fxLayoutGap="1em" fxLayoutAlign="start center">
+            <mat-form-field fxFlex (click)="selectReference()" mat-ripple>
+              <mat-label>Reference</mat-label>
+              <input *ngIf="svc.selectedRefId() != ''" matInput type="text" formControlName="ref" placeholder="Reference"
+                required [value]="svc.selectedRef.path">
+              <input matInput *ngIf="svc.selectedRefId() == ''" type="text" formControlName="ref" placeholder="Reference"
+                required>
+              <mat-hint align="start">Click to change reference, use button to edit.</mat-hint>
+            </mat-form-field>
+            <button mat-icon-button color="primary" aria-label="Edit Reference" (click)="editReference()">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+
+          <span fxFlex></span>
+
+          <div fxLayout="
+          row">
+            <span fxFlex></span>
+            <button mat-raised-button color="primary" type="submit" (click)="saveStatement()" [disabled]="!editForm.valid">Save</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex=50>
+    <router-outlet></router-outlet>
+  </div>
+</div>

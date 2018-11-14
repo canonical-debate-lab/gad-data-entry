@@ -7,9 +7,9 @@
 
 mat-card {
   padding: 0;
+  height: 100%;
   mat-card-header {
-    padding: 16px;
-    padding-left: 0;
+    padding: 16px 0;
     margin: 0;
     h2 {
       margin: 0;
@@ -17,6 +17,7 @@ mat-card {
     mat-card-title {
       margin: 0;
       padding: 0;
+      width: 100%;
       .id {
         background-color: $background-color;
         border-radius: 2px;
@@ -31,5 +32,15 @@ mat-card {
   }
   mat-card-content {
     padding: 16px;
+    .refField {
+      cursor: pointer;
+    }
+  }
+  mat-card-actions {
+    padding: 16px;
+    margin: 0;
+    button {
+      margin: 0;
+    }
   }
 }

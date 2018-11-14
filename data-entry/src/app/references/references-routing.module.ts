@@ -4,6 +4,7 @@ import { ReferencesComponent } from './references.component';
 import { ReferenceModule } from './reference/reference.module';
 import { ReferenceEditComponent } from './reference/edit.component';
 import { ReferencePlaceholderComponent } from './reference/placeholder.component';
+import { ReferenceListComponent } from './reference/list.component';
 
 var routes = [
   {

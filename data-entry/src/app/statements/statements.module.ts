@@ -5,6 +5,7 @@ import { StatementsRoutingModule } from './statements-routing.module';
 import { StatementsComponent } from './statements.component';
 import { MaterialModule } from '../material.module';
 import { StatementModule } from './statement/statement.module';
+import { ReferenceModule } from '../references/reference/reference.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { StatementModule } from './statement/statement.module';
     MaterialModule,
     StatementsRoutingModule,
     StatementModule,
+    ReferenceModule,
   ],
   exports: [
     StatementsComponent,
