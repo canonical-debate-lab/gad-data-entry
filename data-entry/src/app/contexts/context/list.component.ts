@@ -69,10 +69,10 @@ export class ContextListComponent implements OnInit {
   addContext() {
     if (!this.addForm.valid) { return; }
     var stm: Context = {
-      name: this.addForm.get('name').value,
+      name: this.addForm.get('text').value,
       desc: '',
       url: '',
-      keywords: this.addForm.get('name').value.toLowerCase().split(' '),
+      keywords: this.addForm.get('text').value.toLowerCase().split(' '),
       created_at: Date.now().toString(),
       created_by: '',
       updated_at: Date.now().toString(),
