@@ -121,7 +121,7 @@ export class StatementEditComponent implements OnInit {
     this.editForm.patchValue(from);
     this.editForm.patchValue({ ref: from.ref.path });
     this.statement_types.forEach(t => {
-      if (from.statement_type.name == t.name) {
+      if (from.statement_type && from.statement_type.name == t.name) {
         this.editForm.get('statement_type').setValue(t);
       }
     });
