@@ -38,7 +38,7 @@ mat-card {
       overflow: scroll;
       .selected,
       .routeSelected {
-        background-color: map-get($data-entry-primary, 100);
+        background-color: map-get($data-entry-foreground, divider);
       }
     }
   }

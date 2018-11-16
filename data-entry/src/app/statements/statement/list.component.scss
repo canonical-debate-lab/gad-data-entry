@@ -35,7 +35,7 @@ mat-card {
       padding: 0;
       overflow: scroll;
       .selected {
-        background-color: map-get($data-entry-primary, 100);
+        background-color: map-get($data-entry-foreground, divider);
       }
     }
   }
