@@ -28,7 +28,9 @@
   </div>
   <mat-menu #userMenu="matMenu">
     <button *ngIf="afAuth.user | async as user" mat-menu-item>Hey, {{user.displayName}}</button>
-    <button *ngIf="afAuth.user | async as user" (click)="admin.admin=!admin.admin" mat-menu-item>Toggle Admin</button>
+    <button *ngIf="afAuth.user | async as user" mat-menu-item>
+      <mat-slide-toggle [(ngModel)]="admin.admin" [checked]="admin.admin">Toggle Admin</mat-slide-toggle>
+    </button>
     <!-- <button mat-menu-item>Settings</button> -->
     <app-login></app-login>
   </mat-menu>
