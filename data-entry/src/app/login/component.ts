@@ -8,8 +8,8 @@ import { auth } from 'firebase/app';
   styleUrls: ['./component.scss']
 })
 export class LoginComponent {
-  constructor(public afAuth: AngularFireAuth) {
-  }
+  constructor(public afAuth: AngularFireAuth) { }
+
   login() {
     this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
   }

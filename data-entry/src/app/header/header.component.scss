@@ -4,6 +4,9 @@
 
 mat-toolbar {
   height: 55px;
+  .logo {
+    height: 3em;
+  }
 }
 
 mat-menu {
@@ -16,6 +19,12 @@ mat-menu {
       margin: 0;
     }
   }
+}
+
+.offline {
+  margin-right: 1em;
+  height: 2em;
+  line-height: 0px;
 }
 
 .two-rows {

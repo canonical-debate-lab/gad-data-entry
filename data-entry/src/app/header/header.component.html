@@ -1,8 +1,12 @@
 <mat-toolbar class="mat-elevation-z2" color="primary">
   <button [routerLink]="['/']" mat-button>
-    <h2>Great American Debate - Data Entry</h2>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+      <img class="logo" src="assets/logo.png">
+      <h2>Great American Debate - Data Entry</h2>
+    </div>
   </button>
   <span fxFlex></span>
+  <button class="offline" *ngIf="offline" mat-flat-button color="accent">Offline</button>
   <div fxLayout="row" fxLayoutGap="1em">
     <button mat-icon-button [matMenuTriggerFor]="helpMenu">
       <mat-icon class="icon">help</mat-icon>

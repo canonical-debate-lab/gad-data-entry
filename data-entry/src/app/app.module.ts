@@ -17,6 +17,7 @@ import { HeaderModule } from './header/header.module';
 import { ReferencesModule } from './references/references.module';
 import { ContextsModule } from './contexts/contexts.module';
 import { LoginModule } from './login/module';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { LoginModule } from './login/module';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
     BrowserAnimationsModule,
