@@ -68,6 +68,7 @@ export class ReferenceEditComponent implements OnInit {
       source_saved: [false, []],
       authors: ['', []],
       desc: ['', []],
+      details: ['', []],
     })
 
     this.sub = this.route.params.subscribe(params => {

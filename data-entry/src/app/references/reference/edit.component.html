@@ -49,14 +49,24 @@
 
       <mat-form-field fxFlex>
         <mat-label>Source Parent</mat-label>
-        <input matInput type="text" formControlName="source_parent" placeholder="Source Parent" required>
+        <input matInput type="text" formControlName="source_parent" placeholder="The United Federation of Planets"
+          required>
         <mat-hint align="start">Institution (if scientific) / News Outlet (if News) / Website Name (if blog of debate)
         </mat-hint>
       </mat-form-field>
 
       <mat-form-field fxFlex>
         <mat-label>Authors</mat-label>
-        <input matInput type="text" formControlName="authors" placeholder="Authors" required>
+        <input matInput type="text" formControlName="authors" placeholder="(Probably) not you. But thanks for being with us, you are awesome!"
+          required>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>More Details</mat-label>
+        <input matInput type="text" formControlName="details" placeholder="10 pages, 10000 Lines and cookies inside">
+        <mat-hint align="start">Please add information to make it easy to find reference details (page/line no,
+          section).
+        </mat-hint>
       </mat-form-field>
 
       <div fxLayout="row">
