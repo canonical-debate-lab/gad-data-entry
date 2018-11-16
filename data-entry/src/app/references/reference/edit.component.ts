@@ -13,6 +13,7 @@ import * as moment from 'moment';
 import * as firebase from 'firebase';
 import { ReferenceService } from './reference.service';
 import { Statement } from 'src/app/statements/statement/types';
+import { AdminService } from 'src/app/login/service';
 
 @Component({
   selector: 'app-reference-edit',
@@ -51,6 +52,7 @@ export class ReferenceEditComponent implements OnInit {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private svc: ReferenceService,
+    public admin: AdminService,
   ) {
     this.statementCollection = db.collection<Statement>('statements', ref => ref.orderBy('text'));
   }
@@ -137,5 +139,12 @@ export class ReferenceEditComponent implements OnInit {
       panelClass: ['editSnackBar'],
       verticalPosition: 'bottom',
     });
+  }
+
+  deleteItem() {
+    this.referenceDoc.delete().then(_ => {
+      this.openSnackBar('Deleted', '');
+      this.router.navigate(['../..'], { relativeTo: this.route }).catch(err => console.log(err));
+    }).catch(err => this.openSnackBar('permission denied', ''));
   }
 }

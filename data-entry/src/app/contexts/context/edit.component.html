@@ -31,6 +31,9 @@
       </div>
 
       <div fxLayout="row">
+        <button *ngIf="admin.admin" mat-icon-button color="accent" (click)="deleteItem()">
+          <mat-icon>delete</mat-icon>
+        </button>
         <span fxFlex></span>
         <button mat-raised-button color="primary" type="submit" (click)="saveContext()" [disabled]="!editForm.valid">Save</button>
       </div>

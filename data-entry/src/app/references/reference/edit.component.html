@@ -57,6 +57,9 @@
       </mat-form-field>
 
       <div fxLayout="row">
+        <button *ngIf="admin.admin" mat-icon-button color="accent" (click)="deleteItem()">
+          <mat-icon>delete</mat-icon>
+        </button>
         <button mat-raised-button color="primary" (click)="newStatement()" [disabled]="!editForm.valid">New Statement</button>
         <span fxFlex></span>
         <button mat-raised-button color="primary" type="submit" (click)="saveReference()" [disabled]="!editForm.valid">Save</button>

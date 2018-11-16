@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { AdminService } from '../login/service';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     public afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
+    public admin: AdminService,
   ) { }
 
   ngOnInit() {

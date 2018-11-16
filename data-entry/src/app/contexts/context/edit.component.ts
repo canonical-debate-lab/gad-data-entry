@@ -10,6 +10,7 @@ import { Timestamp } from 'rxjs/internal/operators/timestamp';
 import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 
 import { ContextService } from './context.service';
+import { AdminService } from 'src/app/login/service';
 
 @Component({
   selector: 'app-context-edit',
@@ -31,10 +32,12 @@ export class ContextEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private db: AngularFirestore,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     public svc: ContextService,
+    public admin: AdminService,
   ) {
   }
 
@@ -78,6 +81,13 @@ export class ContextEditComponent implements OnInit {
     var stm: ContextId = this.editForm.value;
     stm.keywords = this.editForm.get('name').value.toLowerCase().split(' ')
     this.contextDoc.update(stm).then(_ => this.openSnackBar('Updated', '')).catch(err => this.openSnackBar('permission denied', ''));
+  }
+
+  deleteItem() {
+    this.contextDoc.delete().then(_ => {
+      this.openSnackBar('Deleted', '');
+      this.router.navigate(['../..'], { relativeTo: this.route }).catch(err => console.log(err));
+    }).catch(err => this.openSnackBar('permission denied', ''));
   }
 
   openSnackBar(message: string, action: string) {

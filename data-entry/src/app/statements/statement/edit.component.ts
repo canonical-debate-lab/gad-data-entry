@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material';
 import { StatementService } from './statement.service';
 import { Context, ContextId } from 'src/app/contexts/context/types';
 import { SourceType } from 'src/app/references/reference/types';
+import { AdminService } from 'src/app/login/service';
 
 @Component({
   selector: 'app-statement-edit',
@@ -45,6 +46,7 @@ export class StatementEditComponent implements OnInit {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     public svc: StatementService,
+    public admin: AdminService,
   ) {
     // hmm it wont let me scroll away from way your cursor is XD
   }
@@ -162,4 +164,10 @@ export class StatementEditComponent implements OnInit {
     }
   }
 
+  deleteItem() {
+    this.statementDoc.delete().then(_ => {
+      this.openSnackBar('Deleted', '');
+      this.router.navigate(['../..'], { relativeTo: this.route }).catch(err => console.log(err));
+    }).catch(err => this.openSnackBar('permission denied', ''));
+  }
 }
