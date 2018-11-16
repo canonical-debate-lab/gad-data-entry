@@ -8,6 +8,8 @@ mat-card {
     padding: 0;
     padding-right: 16px;
     margin: 0;
+    height: 68px;
+    max-height: 68px;
     h2 {
       margin: 0;
     }
@@ -20,6 +22,7 @@ mat-card {
     padding-left: 0;
     padding-right: 0;
     .addList {
+      padding-top: 0;
       .addForm {
         width: 100%;
         height: auto;

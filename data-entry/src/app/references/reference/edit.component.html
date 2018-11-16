@@ -1,16 +1,19 @@
-<mat-card fxFlex>
-  <mat-card-header fxLayout="row" fxLayoutAlign="start center">
-    <mat-card-title class="mat-typography" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1em">
-      <h2>Edit Reference</h2>
-      <p class="id">{{(reference | async)?.id}}</p>
-      <span fxFlex></span>
-      <button mat-icon-button color="primary" aria-label="Close" [routerLink]="['../..']">
-        <mat-icon>close</mat-icon>
-      </button>
+<mat-card fxFlex fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-card-header fxLayout="row" fxLayoutAlign="start center" fxFlex="noshrink">
+    <mat-card-title class="mat-typography">
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1em">
+        <h2>Edit Reference</h2>
+        <p class="id">{{(reference | async)?.id}}</p>
+        <span fxFlex></span>
+        <button mat-icon-button color="primary" aria-label="Close" [routerLink]="['../..']">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
     </mat-card-title>
+    <span fxFlex></span>
   </mat-card-header>
-  <mat-divider></mat-divider>
   <mat-card-content>
+    <mat-divider></mat-divider>
     <form [formGroup]="editForm" fxLayout="column" (keydown.enter)="saveReference()" fxLayoutGap="1em">
 
       <div fxLayout.gt-xs="row" fxLayoutGap="1em" fxLayoutAlign="start center">

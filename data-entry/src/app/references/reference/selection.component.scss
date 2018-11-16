@@ -1,7 +1,5 @@
 @import "~@angular/material/theming";
 @import "src/styles.scss";
-@import "~@angular/material/theming";
-@import "src/styles.scss";
 mat-card {
   padding: 0;
   padding-bottom: 0.5em;
@@ -10,6 +8,8 @@ mat-card {
     padding: 0;
     padding-right: 16px;
     margin: 0;
+    height: 68px;
+    max-height: 68px;
     h2 {
       margin: 0;
     }
@@ -22,6 +22,7 @@ mat-card {
     padding-left: 0;
     padding-right: 0;
     .addList {
+      padding-top: 0;
       .addForm {
         width: 100%;
         height: auto;
@@ -36,8 +37,7 @@ mat-card {
     .list {
       padding: 0;
       overflow: scroll;
-      .selected,
-      .routeSelected {
+      .selected {
         background-color: map-get($data-entry-foreground, divider);
       }
     }
