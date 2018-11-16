@@ -1,7 +1,12 @@
 import { DocumentReference } from "@angular/fire/firestore";
+import { SourceType } from "src/app/references/reference/types";
 
 export interface Statement {
   text: string;
+  action: boolean;
+  originalText: string;
+  modified: boolean;
+  statement_type: SourceType;
   desc: string;
   ref: DocumentReference;
   contexts: DocumentReference[];

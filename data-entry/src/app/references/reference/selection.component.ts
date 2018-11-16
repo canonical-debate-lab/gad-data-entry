@@ -84,6 +84,7 @@ export class ReferenceSelectionComponent implements OnInit {
       source_parent: '',
       source_saved: false,
       authors: '',
+      desc: '',
       created_at: Date.now().toString(),
       created_by: '',
       updated_at: Date.now().toString(),

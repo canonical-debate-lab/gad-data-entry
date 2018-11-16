@@ -1,23 +1,14 @@
 <mat-form-field class="contextList">
   <mat-chip-list #chipList>
-    <mat-chip
-      *ngFor="let context of contexts"
-      [selectable]="selectable"
-      [removable]="removable"
-      (removed)="remove(context)">
+    <mat-chip *ngFor="let context of contexts" [selectable]="selectable" [removable]="removable" (removed)="remove(context)">
       {{context.name}}
       <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-    </mat-chip> 
-    <input
-      placeholder="Add context..."
-      #contextInput
-      [formControl]="contextCtrl"
-      [matAutocomplete]="auto"
-      [matChipInputFor]="chipList"
-      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      [matChipInputAddOnBlur]="addOnBlur"
+    </mat-chip>
+    <input placeholder="Add context..." #contextInput [formControl]="contextCtrl" [matAutocomplete]="auto"
+      [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
       (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
+  <mat-hint align="start">Type full words to find context. Press the enter key to create a new one.</mat-hint>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
     <mat-option *ngFor="let context of filteredContexts | async" [value]="context">
       {{context.name}}

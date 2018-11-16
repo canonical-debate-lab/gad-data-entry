@@ -65,6 +65,7 @@ export class ReferenceEditComponent implements OnInit {
       source_parent: ['', [Validators.required]],
       source_saved: [false, []],
       authors: ['', []],
+      desc: ['', []],
     })
 
     this.sub = this.route.params.subscribe(params => {
@@ -103,7 +104,7 @@ export class ReferenceEditComponent implements OnInit {
   saveReference() {
     var stm: ReferenceId = this.editForm.value;
     stm.source_date = new firebase.firestore.Timestamp(moment(this.editForm.get('source_date').value).unix(), 0);
-    this.referenceDoc.update(stm).then(_ => this.openSnackBar('Updated', '')).catch(err => this.openSnackBar('please login', ''));
+    this.referenceDoc.update(stm).then(_ => this.openSnackBar('Updated', '')).catch(err => this.openSnackBar('permission denied', ''));
   }
 
   newStatement() {
@@ -111,6 +112,10 @@ export class ReferenceEditComponent implements OnInit {
     if (this.svc.selectedId() == '') { return; }
     var stm: Statement = {
       text: '',
+      action: false,
+      originalText: 'string',
+      modified: false,
+      statement_type: { name: '' },
       desc: '',
       contexts: [],
       created_at: Date.now().toString(),

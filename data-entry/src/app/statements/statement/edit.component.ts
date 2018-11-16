@@ -9,6 +9,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material';
 import { StatementService } from './statement.service';
 import { Context, ContextId } from 'src/app/contexts/context/types';
+import { SourceType } from 'src/app/references/reference/types';
 
 @Component({
   selector: 'app-statement-edit',
@@ -27,6 +28,11 @@ export class StatementEditComponent implements OnInit {
   private ctxSub: Subscription;
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  statement_types: SourceType[] = [
+    { name: 'Opinion' },
+    { name: 'Supposed Fact' },
+  ];
 
   editForm: FormGroup;
   loading = false;
@@ -48,9 +54,12 @@ export class StatementEditComponent implements OnInit {
   ngOnInit() {
     this.editForm = this.fb.group({
       text: ['', [Validators.required]],
-      desc: ['', [Validators.required]],
-      ref: new FormControl({ value: '', disabled: true }, Validators.required),
       action: [false, []],
+      originalText: ['', []],
+      modified: [false, []],
+      statement_type: [this.statement_types[0], [Validators.required]],
+      desc: ['', []],
+      ref: new FormControl({ value: '', disabled: true }, Validators.required),
     })
 
     this.sub = this.route.params.subscribe(params => {
@@ -109,13 +118,18 @@ export class StatementEditComponent implements OnInit {
   updateForm(from: StatementId) {
     this.editForm.patchValue(from);
     this.editForm.patchValue({ ref: from.ref.path });
+    this.statement_types.forEach(t => {
+      if (from.statement_type.name == t.name) {
+        this.editForm.get('statement_type').setValue(t);
+      }
+    });
   }
 
   saveStatement() {
     var stm: StatementId = this.editForm.value;
     stm.contexts = this.contexts.map(value => { console.log(value); return value.docRef; });
     stm.ref = this.svc.selectedRef;
-    this.statementDoc.update(stm).then(_ => this.openSnackBar('Updated', '')).catch(err => this.openSnackBar('please login', ''));
+    this.statementDoc.update(stm).then(_ => this.openSnackBar('Updated', '')).catch(err => this.openSnackBar('permission denied', ''));
   }
 
   openSnackBar(message: string, action: string) {
@@ -138,6 +152,14 @@ export class StatementEditComponent implements OnInit {
 
   editReference() {
     this.router.navigate(['reference', 'edit', this.svc.selectedRef.id], { relativeTo: this.route })
+  }
+
+  setModified(value: string) {
+    if (value.length > 0) {
+      this.editForm.get('modified').setValue(true);
+    } else {
+      this.editForm.get('modified').setValue(false);
+    }
   }
 
 }

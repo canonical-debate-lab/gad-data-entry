@@ -9,6 +9,7 @@ export interface Reference {
   authors: string;
   source_parent: string;
   source_saved: boolean;
+  desc: string;
   created_at: string;
   created_by: string;
   updated_at: string;

@@ -61,6 +61,10 @@ export class StatementListComponent implements OnInit {
     if (!this.addForm.valid) { return; }
     var stm: Statement = {
       text: this.addForm.get('text').value,
+      action: false,
+      originalText: 'string',
+      modified: false,
+      statement_type: { name: '' },
       desc: '',
       contexts: [],
       created_at: Date.now().toString(),
