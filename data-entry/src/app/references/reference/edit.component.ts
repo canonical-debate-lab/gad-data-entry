@@ -11,9 +11,10 @@ import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-mo
 
 import * as moment from 'moment';
 import * as firebase from 'firebase';
-import { ReferenceService } from './reference.service';
+import { ReferenceService } from './service';
 import { Statement } from 'src/app/statements/statement/types';
 import { AdminService } from 'src/app/login/service';
+import { StatementService } from 'src/app/statements/statement/service';
 
 @Component({
   selector: 'app-reference-edit',
@@ -25,10 +26,6 @@ import { AdminService } from 'src/app/login/service';
   ]
 })
 export class ReferenceEditComponent implements OnInit {
-
-  private referenceDoc: AngularFirestoreDocument<Reference>;
-  reference: Observable<ReferenceId>;
-  private statementCollection: AngularFirestoreCollection<Statement>;
 
   editForm: FormGroup;
   loading = false;
@@ -48,13 +45,12 @@ export class ReferenceEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private db: AngularFirestore,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private svc: ReferenceService,
+    public svc: ReferenceService,
+    private stmSvc: StatementService,
     public admin: AdminService,
   ) {
-    this.statementCollection = db.collection<Statement>('statements', ref => ref.orderBy('text'));
   }
 
 
@@ -72,21 +68,9 @@ export class ReferenceEditComponent implements OnInit {
     })
 
     this.sub = this.route.params.subscribe(params => {
-      console.log(params['id']);
-      this.referenceDoc = this.db.doc<Reference>('references/' + params['id']);
-      console.log(this.referenceDoc);
-      this.reference = this.referenceDoc.snapshotChanges().pipe(
-        map(action => {
-          const data = action.payload.data() as Reference;
-          const id = action.payload.id;
-          const docRef = action.payload.ref;
-          console.log(data);
-          this.svc.selection = { id, docRef, ...data };
-          this.updateForm({ id, docRef, ...data });
-
-          return { id, docRef, ...data };
-        })
-      );
+      this.svc.select(params['id'], (v) => {
+        this.updateForm(v);
+      });
     });
   }
 
@@ -107,30 +91,15 @@ export class ReferenceEditComponent implements OnInit {
   saveReference() {
     var stm: ReferenceId = this.editForm.value;
     stm.source_date = new firebase.firestore.Timestamp(moment(this.editForm.get('source_date').value).unix(), 0);
-    this.referenceDoc.update(stm).then(_ => this.openSnackBar('Updated', '')).catch(err => this.openSnackBar('permission denied', ''));
+    this.svc.referenceDoc.update(stm).then(_ => this.openSnackBar('Updated', '')).catch(err => this.openSnackBar('permission denied', ''));
   }
 
   newStatement() {
     if (!this.editForm.valid) { return; }
     if (this.svc.selectedId() == '') { return; }
-    var stm: Statement = {
-      text: '',
-      action: false,
-      originalText: 'string',
-      modified: false,
-      statement_type: { name: '' },
-      desc: '',
-      contexts: [],
-      created_at: Date.now().toString(),
-      created_by: '',
-      ref: this.svc.selection.docRef,
-      updated_at: Date.now().toString(),
-      updated_by: '',
-    };
-
-    this.statementCollection.add(stm).then(v => {
-      this.router.navigate(['/', 'statements', 'edit', v.id, 'reference', 'edit', this.svc.selectedId()], { relativeTo: this.route }).catch(err => console.log(err));
-    });
+    this.stmSvc.add('', v => {
+      this.router.navigate(['edit', v.id], { relativeTo: this.route }).catch(err => console.log(err));
+    }, this.svc.selection.docRef);
   }
 
   openSnackBar(message: string, action: string) {
@@ -143,7 +112,7 @@ export class ReferenceEditComponent implements OnInit {
   }
 
   deleteItem() {
-    this.referenceDoc.delete().then(_ => {
+    this.svc.referenceDoc.delete().then(_ => {
       this.openSnackBar('Deleted', '');
       this.router.navigate(['../..'], { relativeTo: this.route }).catch(err => console.log(err));
     }).catch(err => this.openSnackBar('permission denied', ''));

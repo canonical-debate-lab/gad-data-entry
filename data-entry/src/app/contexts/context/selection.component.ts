@@ -8,8 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
 import * as moment from 'moment';
 import { RouterEvent, NavigationEnd, Router, ActivatedRoute } from '@angular/router';
-import { ContextService } from './context.service';
-import { StatementService } from 'src/app/statements/statement/statement.service';
+import { ContextService } from './service';
+import { StatementService } from 'src/app/statements/statement/service';
 
 @Component({
   selector: 'app-context-selection',
@@ -18,28 +18,14 @@ import { StatementService } from 'src/app/statements/statement/statement.service
 })
 export class ContextSelectionComponent implements OnInit {
 
-  private contextCollection: AngularFirestoreCollection<Context>;
-  contextList: Observable<ContextId[]>;
-
   addForm: FormGroup;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private db: AngularFirestore,
     private fb: FormBuilder,
-    private svc: ContextService,
+    public svc: ContextService,
     private stmSvc: StatementService,
   ) {
-    this.contextCollection = db.collection<Context>('contexts', ref => ref.orderBy('source'));
-    this.contextList = this.contextCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Context;
-        const id = a.payload.doc.id;
-        const docRef = a.payload.doc.ref;
-
-        return { id, docRef, ...data };
-      }))
-    );
   }
 
   routeId: string;
@@ -74,20 +60,8 @@ export class ContextSelectionComponent implements OnInit {
 
   addContext() {
     if (!this.addForm.valid) { return; }
-    var stm: Context = {
-      name: this.addForm.get('name').value,
-      desc: '',
-      url: '',
-      keywords: this.addForm.get('name').value.toLowerCase().split(' '),
-      created_at: Date.now().toString(),
-      created_by: '',
-      updated_at: Date.now().toString(),
-      updated_by: '',
-    };
-
-    this.contextCollection.add(stm).then(v => {
+    this.svc.add(this.addForm.get('text').value, v => {
       this.router.navigate(['edit', v.id], { relativeTo: this.route }).catch(err => console.log(err));
     });
-
   }
 }

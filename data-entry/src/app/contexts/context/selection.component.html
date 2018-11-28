@@ -35,14 +35,13 @@
       <mat-divider></mat-divider>
     </mat-action-list>
     <mat-action-list class="list" #contexts fxFlex=100>
-      <mat-list-item *ngFor="let context of contextList | async" [ngClass]="{'selected': svc.selectedId() == context.id, routeSelected: routeId == context.id}">
+      <mat-list-item *ngFor="let context of svc.list | async" [ngClass]="{'selected': svc.selectedId() == context.id, routeSelected: routeId == context.id}">
         <mat-divider></mat-divider>
         <div fxFlex (click)="select(context)" fxLayout="row" fxLayoutAlign="start center">
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
-            <p fxFlex="noshrink" class="refType">{{context.source_type.name}}</p>
-            <p class="refText">{{context.source}}</p>
+            <p fxFlex="noshrink" class="refType">{{context.name}}</p>
           </div>
-          <a mat-icon-button href="{{context.source}}" target="_blank" rel="noopener noreferrer">
+          <a mat-icon-button href="{{context.url}}" target="_blank" rel="noopener noreferrer">
             <mat-icon class="icon">link</mat-icon>
           </a>
         </div>

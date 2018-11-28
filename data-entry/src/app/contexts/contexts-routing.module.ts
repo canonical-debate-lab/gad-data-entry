@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ContextsComponent } from './contexts.component';
-import { ContextModule } from './context/context.module';
+import { ContextModule } from './context/module';
 import { ContextEditComponent } from './context/edit.component';
 import { ContextPlaceholderComponent } from './context/placeholder.component';
 import { ContextListComponent } from './context/list.component';

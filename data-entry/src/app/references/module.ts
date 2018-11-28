@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ReferencesRoutingModule } from './references-routing.module';
 import { ReferencesComponent } from './references.component';
 import { MaterialModule } from '../material.module';
-import { ReferenceModule } from './reference/reference.module';
+import { ReferenceModule } from './reference/module';
 
 @NgModule({
   declarations: [

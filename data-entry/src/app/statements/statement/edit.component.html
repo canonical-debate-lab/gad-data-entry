@@ -5,7 +5,7 @@
         <mat-card-title class="mat-typography">
           <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1em">
             <h2>Edit Statement</h2>
-            <p class="id">{{(statement | async)?.id}}</p>
+            <p class="id">{{(svc.statement | async)?.id}}</p>
             <span fxFlex></span>
             <button mat-icon-button color="primary" aria-label="Close" [routerLink]="['/statements']">
               <mat-icon>close</mat-icon>
@@ -62,10 +62,7 @@
           <div class="refField" fxLayout.gt-xs="row" fxLayoutGap="1em" fxLayoutAlign="start center">
             <mat-form-field fxFlex (click)="selectReference()" mat-ripple>
               <mat-label>Reference</mat-label>
-              <input *ngIf="svc.selectedRefId() != ''" matInput type="text" formControlName="ref" placeholder="Reference"
-                required [value]="svc.selectedRef.path">
-              <input matInput *ngIf="svc.selectedRefId() == ''" type="text" formControlName="ref" placeholder="Reference"
-                required>
+              <input matInput type="text" formControlName="ref" placeholder="Reference" required [value]="(svc.selectedRef)?.path">
               <mat-hint align="start">Click to change reference, use button to edit.</mat-hint>
             </mat-form-field>
             <button mat-icon-button color="primary" aria-label="Edit Reference" (click)="editReference()">

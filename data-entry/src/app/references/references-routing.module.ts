@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ReferencesComponent } from './references.component';
-import { ReferenceModule } from './reference/reference.module';
+import { ReferenceModule } from './reference/module';
 import { ReferenceEditComponent } from './reference/edit.component';
 import { ReferencePlaceholderComponent } from './reference/placeholder.component';
 import { ReferenceListComponent } from './reference/list.component';

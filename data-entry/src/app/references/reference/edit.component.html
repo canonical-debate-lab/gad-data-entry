@@ -3,7 +3,7 @@
     <mat-card-title class="mat-typography">
       <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1em">
         <h2>Edit Reference</h2>
-        <p class="id">{{(reference | async)?.id}}</p>
+        <p class="id">{{(svc.reference | async)?.id}}</p>
         <span fxFlex></span>
         <button mat-icon-button color="primary" aria-label="Close" [routerLink]="['../..']">
           <mat-icon>close</mat-icon>

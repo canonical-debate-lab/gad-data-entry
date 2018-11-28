@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
 import * as moment from 'moment';
 import { RouterEvent, NavigationEnd, Router, ActivatedRoute } from '@angular/router';
-import { ContextService } from './context.service';
+import { ContextService } from './service';
 
 @Component({
   selector: 'app-context-list',
@@ -24,20 +24,10 @@ export class ContextListComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private db: AngularFirestore,
     private fb: FormBuilder,
-    private svc: ContextService,
+    public svc: ContextService,
   ) {
-    this.contextCollection = db.collection<Context>('contexts', ref => ref.orderBy('name'));
-    this.contextList = this.contextCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Context;
-        const id = a.payload.doc.id;
-        const docRef = a.payload.doc.ref;
 
-        return { id, docRef, ...data };
-      }))
-    );
   }
 
   search = '';
@@ -50,8 +40,6 @@ export class ContextListComponent implements OnInit {
     })
   }
 
-  ngOnDestroy(): void {
-  }
 
   select(item: ContextId) {
     if (this.svc.selectedId() === item.id) {
@@ -64,24 +52,10 @@ export class ContextListComponent implements OnInit {
     this.router.navigate(['edit', item.id], { relativeTo: this.route }).catch(err => console.log(err));
   }
 
-
-
   addContext() {
     if (!this.addForm.valid) { return; }
-    var stm: Context = {
-      name: this.addForm.get('text').value,
-      desc: '',
-      url: '',
-      keywords: this.addForm.get('text').value.toLowerCase().split(' '),
-      created_at: Date.now().toString(),
-      created_by: '',
-      updated_at: Date.now().toString(),
-      updated_by: '',
-    };
-
-    this.contextCollection.add(stm).then(v => {
+    this.svc.add(this.addForm.get('text').value, v => {
       this.router.navigate(['edit', v.id], { relativeTo: this.route }).catch(err => console.log(err));
     });
-
   }
 }

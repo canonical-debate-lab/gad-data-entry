@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
 import * as moment from 'moment';
 import { RouterEvent, NavigationEnd, Router, ActivatedRoute } from '@angular/router';
-import { ReferenceService } from './reference.service';
+import { ReferenceService } from './service';
 
 @Component({
   selector: 'app-reference-list',
@@ -24,20 +24,9 @@ export class ReferenceListComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private db: AngularFirestore,
     private fb: FormBuilder,
-    private svc: ReferenceService,
+    public svc: ReferenceService,
   ) {
-    this.referenceCollection = db.collection<Reference>('references', ref => ref.orderBy('source'));
-    this.referenceList = this.referenceCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Reference;
-        const id = a.payload.doc.id;
-        const docRef = a.payload.doc.ref;
-
-        return { id, docRef, ...data };
-      }))
-    );
   }
 
   search = '';
@@ -64,28 +53,10 @@ export class ReferenceListComponent implements OnInit {
     this.router.navigate(['edit', item.id], { relativeTo: this.route }).catch(err => console.log(err));
   }
 
-
-
   addReference() {
     if (!this.addForm.valid) { return; }
-    var stm: Reference = {
-      source: this.addForm.get('text').value,
-      source_type: { name: '' },
-      source_date: new firebase.firestore.Timestamp(moment(moment.now()).unix(), 0),
-      source_parent: '',
-      source_saved: false,
-      authors: '',
-      desc: '',
-      details: '',
-      created_at: Date.now().toString(),
-      created_by: '',
-      updated_at: Date.now().toString(),
-      updated_by: '',
-    };
-
-    this.referenceCollection.add(stm).then(v => {
+    this.svc.add(this.addForm.get('text').value, v => {
       this.router.navigate(['edit', v.id], { relativeTo: this.route }).catch(err => console.log(err));
     });
-
   }
 }

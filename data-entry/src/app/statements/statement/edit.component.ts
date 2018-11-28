@@ -7,7 +7,7 @@ import { Observable, Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material';
-import { StatementService } from './statement.service';
+import { StatementService } from './service';
 import { Context, ContextId } from 'src/app/contexts/context/types';
 import { SourceType } from 'src/app/references/reference/types';
 import { AdminService } from 'src/app/login/service';
@@ -18,9 +18,6 @@ import { AdminService } from 'src/app/login/service';
   styleUrls: ['./edit.component.scss']
 })
 export class StatementEditComponent implements OnInit {
-
-  private statementDoc: AngularFirestoreDocument<Statement>;
-  statement: Observable<StatementId>;
 
   private contextCollection: AngularFirestoreCollection<Context>;
   contextList: Observable<ContextId[]>;
@@ -48,7 +45,6 @@ export class StatementEditComponent implements OnInit {
     public svc: StatementService,
     public admin: AdminService,
   ) {
-    // hmm it wont let me scroll away from way your cursor is XD
   }
 
 
@@ -65,23 +61,12 @@ export class StatementEditComponent implements OnInit {
     })
 
     this.sub = this.route.params.subscribe(params => {
-      this.statementDoc = this.db.doc<Statement>('statements/' + params['id']);
-      console.log(this.statementDoc);
-      this.statement = this.statementDoc.snapshotChanges().pipe(
-        map(action => {
-          const data = action.payload.data() as Statement;
-          const id = action.payload.id;
-          const docRef = action.payload.ref;
-          console.log(data);
-          this.svc.selection = { id, docRef, ...data };
-          this.svc.selectedRef = data.ref;
-          this.updateForm({ id, docRef, ...data });
-          return { id, docRef, ...data };
-        })
-      );
+      this.svc.select(params['id'], (v) => {
+        this.updateForm(v);
+      });
     });
 
-    this.ctxSub = this.statementDoc.valueChanges().pipe(
+    this.ctxSub = this.svc.statementDoc.valueChanges().pipe(
       switchMap(value => {
         this.contexts = [];
         return this.db.collection<Context>('contexts').snapshotChanges().pipe(
@@ -119,7 +104,9 @@ export class StatementEditComponent implements OnInit {
 
   updateForm(from: StatementId) {
     this.editForm.patchValue(from);
-    this.editForm.patchValue({ ref: from.ref.path });
+    if (from.ref) {
+      this.editForm.patchValue({ ref: from.ref.path });
+    }
     this.statement_types.forEach(t => {
       if (from.statement_type && from.statement_type.name == t.name) {
         this.editForm.get('statement_type').setValue(t);
@@ -131,7 +118,7 @@ export class StatementEditComponent implements OnInit {
     var stm: StatementId = this.editForm.value;
     stm.contexts = this.contexts.map(value => { console.log(value); return value.docRef; });
     stm.ref = this.svc.selectedRef;
-    this.statementDoc.update(stm).then(_ => this.openSnackBar('Updated', '')).catch(err => this.openSnackBar('permission denied', ''));
+    this.svc.statementDoc.update(stm).then(_ => this.openSnackBar('Updated', '')).catch(err => this.openSnackBar('permission denied', ''));
   }
 
   openSnackBar(message: string, action: string) {
@@ -165,7 +152,7 @@ export class StatementEditComponent implements OnInit {
   }
 
   deleteItem() {
-    this.statementDoc.delete().then(_ => {
+    this.svc.statementDoc.delete().then(_ => {
       this.openSnackBar('Deleted', '');
       this.router.navigate(['../..'], { relativeTo: this.route }).catch(err => console.log(err));
     }).catch(err => this.openSnackBar('permission denied', ''));

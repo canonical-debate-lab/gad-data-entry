@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ContextService } from './context.service';
+import { ContextService } from './service';
 import { Subscription } from 'rxjs';
 
 @Component({

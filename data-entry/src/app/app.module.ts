@@ -12,10 +12,10 @@ import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MaterialModule } from './material.module';
-import { StatementsModule } from './statements/statements.module';
+import { StatementsModule } from './statements/module';
 import { HeaderModule } from './header/header.module';
-import { ReferencesModule } from './references/references.module';
-import { ContextsModule } from './contexts/contexts.module';
+import { ReferencesModule } from './references/module';
+import { ContextsModule } from './contexts/module';
 import { LoginModule } from './login/module';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 

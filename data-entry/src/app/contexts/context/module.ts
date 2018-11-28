@@ -6,9 +6,9 @@ import { ContextEditComponent } from './edit.component';
 import { MaterialModule } from '../../material.module';
 import { RouterModule } from '@angular/router';
 import { ContextPlaceholderComponent } from './placeholder.component';
-import { ContextService } from './context.service';
+import { ContextService } from './service';
 import { ContextSelectionComponent } from './selection.component';
-import { StatementService } from 'src/app/statements/statement/statement.service';
+import { StatementService } from 'src/app/statements/statement/service';
 
 @NgModule({
   declarations: [

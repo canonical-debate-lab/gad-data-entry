@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ContextsRoutingModule } from './contexts-routing.module';
 import { ContextsComponent } from './contexts.component';
 import { MaterialModule } from '../material.module';
-import { ContextModule } from './context/context.module';
+import { ContextModule } from './context/module';
 
 @NgModule({
   declarations: [

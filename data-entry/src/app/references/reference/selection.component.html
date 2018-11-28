@@ -35,7 +35,7 @@
       <mat-divider></mat-divider>
     </mat-action-list>
     <mat-action-list class="list" #references fxFlex=100>
-      <mat-list-item *ngFor="let reference of referenceList | async" [ngClass]="{'selected': svc.selectedId() == reference.id, routeSelected: routeId == reference.id}">
+      <mat-list-item *ngFor="let reference of svc.list | async" [ngClass]="{'selected': svc.selectedId() == reference.id, routeSelected: routeId == reference.id}">
         <mat-divider></mat-divider>
         <div fxFlex (click)="select(reference)" fxLayout="row" fxLayoutAlign="start center">
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">

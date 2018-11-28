@@ -6,9 +6,9 @@ import { ReferenceEditComponent } from './edit.component';
 import { MaterialModule } from '../../material.module';
 import { RouterModule } from '@angular/router';
 import { ReferencePlaceholderComponent } from './placeholder.component';
-import { ReferenceService } from './reference.service';
+import { ReferenceService } from './service';
 import { ReferenceSelectionComponent } from './selection.component';
-import { StatementService } from 'src/app/statements/statement/statement.service';
+import { StatementService } from 'src/app/statements/statement/service';
 
 @NgModule({
   declarations: [

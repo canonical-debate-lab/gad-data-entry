@@ -35,7 +35,7 @@
       <mat-divider></mat-divider>
     </mat-action-list>
     <mat-action-list class="list" #contexts fxFlex=100>
-      <mat-list-item *ngFor="let context of contextList | async" [ngClass]="{'selected': svc.selection == context.id}">
+      <mat-list-item *ngFor="let context of svc.list | async" [ngClass]="{'selected': svc.selection == context.id}">
         <mat-divider></mat-divider>
         <div fxFlex (click)="select(context)" fxLayout="row" fxLayoutAlign="start center">
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">

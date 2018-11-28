@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { StatementsComponent } from './statements.component';
-import { StatementModule } from './statement/statement.module';
+import { StatementModule } from './statement/module';
 import { StatementListComponent } from './statement/list.component';
 import { StatementEditComponent } from './statement/edit.component';
 import { ReferencePlaceholderComponent } from '../references/reference/placeholder.component';

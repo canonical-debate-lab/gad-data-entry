@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ReferenceService } from './reference.service';
+import { ReferenceService } from './service';
 import { Subscription } from 'rxjs';
 
 @Component({

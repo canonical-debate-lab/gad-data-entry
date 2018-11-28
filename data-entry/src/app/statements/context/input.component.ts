@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { map, startWith, debounceTime, switchMap, filter } from 'rxjs/operators';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { ContextId, Context } from '../../contexts/context/types';
+import { ContextService } from 'src/app/contexts/context/service';
 
 /**
  * @title Chips Autocomplete
@@ -23,8 +24,6 @@ export class ContextInput {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   contextCtrl = new FormControl();
 
-  private contextCollection: AngularFirestoreCollection<Context>;
-  contextList: Observable<ContextId[]>;
   @Input() contexts: ContextId[];
 
   filteredContexts: Observable<ContextId[]>;
@@ -34,16 +33,8 @@ export class ContextInput {
 
   constructor(
     private db: AngularFirestore,
+    public svc: ContextService,
   ) {
-    this.contextCollection = db.collection<Context>('contexts');
-    this.contextList = this.contextCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Context;
-        const id = a.payload.doc.id;
-        const docRef = a.payload.doc.ref;
-        return { id, docRef, ...data };
-      }))
-    );
     this.filteredContexts = this.contextCtrl.valueChanges.pipe(
       filter(value => { return value !== null }),
       filter(value => { console.log(value); return typeof value == typeof "" }),
@@ -68,29 +59,11 @@ export class ContextInput {
       const value = event.value;
 
       // Add our context
+      // TODO(kwiesmueller): Open Context for further editing!
       if (value) {
-        var ctx: Context = {
-          name: value,
-          desc: '',
-          url: '',
-          keywords: value.toLowerCase().split(' '),
-          created_at: Date.now().toString(),
-          created_by: '',
-          updated_at: Date.now().toString(),
-          updated_by: '',
-        };
-        // TODO(kwiesmueller): Open Context for further editing!
-
-        this.contextCollection.add(ctx).then(v => {
-          var newCtx: ContextId = {
-            id: v.id,
-            docRef: v,
-            ...ctx,
-          }
-
-          this.contexts.push(newCtx);
-        })
-
+        this.svc.add(value, v => {
+          this.contexts.push(v);
+        });
       }
 
       // Reset the input value

@@ -6,8 +6,8 @@ import { StatementEditComponent } from './edit.component';
 import { MaterialModule } from '../../material.module';
 import { RouterModule } from '@angular/router';
 import { ContextInput } from '../context/input.component';
-import { StatementService } from './statement.service';
-import { ReferenceModule } from 'src/app/references/reference/reference.module';
+import { StatementService } from './service';
+import { ReferenceModule } from 'src/app/references/reference/module';
 
 @NgModule({
   declarations: [

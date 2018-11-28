@@ -37,7 +37,7 @@
           <mat-divider></mat-divider>
         </mat-action-list>
         <mat-action-list class="list" #references fxFlex=100>
-          <mat-list-item *ngFor="let statement of statementList | async" [ngClass]="{'selected': svc.selectedId() == statement.id}">
+          <mat-list-item *ngFor="let statement of svc.list | async" [ngClass]="{'selected': svc.selectedId() == statement.id}">
             <mat-divider></mat-divider>
             <div fxFlex (click)="select(statement)">
               <p>{{statement.text}}</p>
