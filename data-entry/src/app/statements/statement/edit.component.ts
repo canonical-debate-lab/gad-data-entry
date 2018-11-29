@@ -75,6 +75,7 @@ export class StatementEditComponent implements OnInit {
           console.log(data);
           this.svc.selection = { id, docRef, ...data };
           this.svc.selectedRef = data.ref;
+          this.contexts = [];
           this.updateForm({ id, docRef, ...data });
           return { id, docRef, ...data };
         })

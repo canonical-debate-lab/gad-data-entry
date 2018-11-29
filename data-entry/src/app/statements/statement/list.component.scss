@@ -37,6 +37,14 @@ mat-card {
     .list {
       padding: 0;
       overflow: scroll;
+      mat-list-item {
+        .list-item-text {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          word-wrap: break-word;
+          max-height: 20px;
+        }
+      }
       .selected {
         background-color: map-get($data-entry-foreground, divider);
       }
