@@ -67,6 +67,7 @@ export class ReferenceEditComponent implements OnInit {
       source_parent: ['', [Validators.required]],
       source_saved: [false, []],
       authors: ['', []],
+      title: ['', []],
       desc: ['', []],
       details: ['', []],
     })
@@ -80,6 +81,8 @@ export class ReferenceEditComponent implements OnInit {
           const data = action.payload.data() as Reference;
           const id = action.payload.id;
           const docRef = action.payload.ref;
+          // Temporary override for migrating fields
+          data.title = data.title || '';
           console.log(data);
           this.svc.selection = { id, docRef, ...data };
           this.updateForm({ id, docRef, ...data });
