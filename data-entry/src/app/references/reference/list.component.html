@@ -1,4 +1,4 @@
-<mat-card fxFlex fxLayout="column" fxLayoutAlign="start stretch">
+<mat-card fxFlex=100 fxLayout="column" fxLayoutAlign="start stretch">
   <mat-card-header fxLayout="row" fxLayoutAlign="start center" fxFlex="noshrink">
     <mat-card-title class="mat-typography">
       <h2>References</h2>
@@ -37,18 +37,21 @@
     <mat-action-list class="list" #references fxFlex=100>
       <mat-list-item *ngFor="let reference of referenceList | async" [ngClass]="{'selected': svc.selectedId() == reference.id}">
         <mat-divider></mat-divider>
-        <div fxFlex (click)="select(reference)" fxLayout="row" fxLayoutAlign="start center">
-          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1em">
+        <div fxFlex=100 fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="refContent" fxFlex (click)="select(reference)" fxLayout="row" fxLayoutAlign="start center"
+            fxLayoutGap="1em">
             <p fxFlex="noshrink" class="refType">{{reference.source_type.name}}</p>
-            <p class="refText">{{reference.source}}</p>
+            <div class="refText">{{reference.source}}</div>
+          </div>
+          <div fxLayout="row" fxFlex="nogrow">
+            <a mat-icon-button href="{{reference.source}}" target="_blank" rel="noopener noreferrer">
+              <mat-icon class="icon">link</mat-icon>
+            </a>
+            <button mat-icon-button [routerLink]="['edit', reference.id]">
+              <mat-icon class="icon">edit</mat-icon>
+            </button>
           </div>
         </div>
-        <a mat-icon-button href="{{reference.source}}" target="_blank" rel="noopener noreferrer">
-          <mat-icon class="icon">link</mat-icon>
-        </a>
-        <button mat-icon-button [routerLink]="['edit', reference.id]">
-          <mat-icon class="icon">edit</mat-icon>
-        </button>
       </mat-list-item>
     </mat-action-list>
   </mat-card-content>

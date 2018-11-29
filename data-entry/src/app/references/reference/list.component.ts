@@ -75,6 +75,7 @@ export class ReferenceListComponent implements OnInit {
       source_parent: '',
       source_saved: false,
       authors: '',
+      title: '',
       desc: '',
       details: '',
       created_at: Date.now().toString(),

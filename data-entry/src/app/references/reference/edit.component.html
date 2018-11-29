@@ -40,6 +40,11 @@
       </div>
 
       <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput type="text" formControlName="title" placeholder="Title" required>
+      </mat-form-field>
+
+      <mat-form-field>
         <mat-label>Description</mat-label>
         <textarea matInput type="text" formControlName="desc" placeholder="Description"></textarea>
         <mat-hint align="start">Press Shift+Enter for a new line</mat-hint>
