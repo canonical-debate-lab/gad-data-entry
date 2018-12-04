@@ -28,7 +28,7 @@ export class ContextListComponent implements OnInit {
     private fb: FormBuilder,
     private svc: ContextService,
   ) {
-    this.contextCollection = db.collection<Context>('contexts', ref => ref.orderBy('name'));
+    this.contextCollection = db.collection<Context>('data/prod/contexts', ref => ref.orderBy('name'));
     this.contextList = this.contextCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Context;

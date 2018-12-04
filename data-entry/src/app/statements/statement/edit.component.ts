@@ -65,7 +65,7 @@ export class StatementEditComponent implements OnInit {
     })
 
     this.sub = this.route.params.subscribe(params => {
-      this.statementDoc = this.db.doc<Statement>('statements/' + params['id']);
+      this.statementDoc = this.db.doc<Statement>('data/prod/statements/' + params['id']);
       console.log(this.statementDoc);
       this.statement = this.statementDoc.snapshotChanges().pipe(
         map(action => {
@@ -85,7 +85,7 @@ export class StatementEditComponent implements OnInit {
     this.ctxSub = this.statementDoc.valueChanges().pipe(
       switchMap(value => {
         this.contexts = [];
-        return this.db.collection<Context>('contexts').snapshotChanges().pipe(
+        return this.db.collection<Context>('data/prod/contexts').snapshotChanges().pipe(
           map(actions => actions.map(a => {
             const data = a.payload.doc.data() as Context;
             const id = a.payload.doc.id;

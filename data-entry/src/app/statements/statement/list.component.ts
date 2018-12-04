@@ -25,7 +25,7 @@ export class StatementListComponent implements OnInit {
     private fb: FormBuilder,
     private svc: StatementService,
   ) {
-    this.statementCollection = db.collection<Statement>('statements', ref => ref.orderBy('text'));
+    this.statementCollection = db.collection<Statement>('data/prod/statements', ref => ref.orderBy('text'));
     this.statementList = this.statementCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Statement;

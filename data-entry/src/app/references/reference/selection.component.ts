@@ -30,7 +30,7 @@ export class ReferenceSelectionComponent implements OnInit {
     private svc: ReferenceService,
     private stmSvc: StatementService,
   ) {
-    this.referenceCollection = db.collection<Reference>('references', ref => ref.orderBy('source'));
+    this.referenceCollection = db.collection<Reference>('data/prod/references', ref => ref.orderBy('source'));
     this.referenceList = this.referenceCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Reference;

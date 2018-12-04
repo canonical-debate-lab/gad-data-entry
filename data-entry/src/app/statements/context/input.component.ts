@@ -35,7 +35,7 @@ export class ContextInput {
   constructor(
     private db: AngularFirestore,
   ) {
-    this.contextCollection = db.collection<Context>('contexts');
+    this.contextCollection = db.collection<Context>('data/prod/contexts');
     this.contextList = this.contextCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Context;
@@ -49,7 +49,7 @@ export class ContextInput {
       filter(value => { console.log(value); return typeof value == typeof "" }),
       debounceTime(300),
       switchMap(value =>
-        this.db.collection('contexts', ref => ref.where('keywords', 'array-contains', value.toLowerCase())).snapshotChanges().pipe(
+        this.db.collection('data/prod/contexts', ref => ref.where('keywords', 'array-contains', value.toLowerCase())).snapshotChanges().pipe(
           map(actions => actions.map(a => {
             const data = a.payload.doc.data() as Context;
             const id = a.payload.doc.id;

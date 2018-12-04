@@ -28,7 +28,7 @@ export class ReferenceListComponent implements OnInit {
     private fb: FormBuilder,
     private svc: ReferenceService,
   ) {
-    this.referenceCollection = db.collection<Reference>('references', ref => ref.orderBy('source'));
+    this.referenceCollection = db.collection<Reference>('data/prod/references', ref => ref.orderBy('source'));
     this.referenceList = this.referenceCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Reference;

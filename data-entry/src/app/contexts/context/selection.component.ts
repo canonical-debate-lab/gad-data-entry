@@ -30,7 +30,7 @@ export class ContextSelectionComponent implements OnInit {
     private svc: ContextService,
     private stmSvc: StatementService,
   ) {
-    this.contextCollection = db.collection<Context>('contexts', ref => ref.orderBy('source'));
+    this.contextCollection = db.collection<Context>('data/prod/contexts', ref => ref.orderBy('source'));
     this.contextList = this.contextCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Context;

@@ -54,7 +54,7 @@ export class ReferenceEditComponent implements OnInit {
     private svc: ReferenceService,
     public admin: AdminService,
   ) {
-    this.statementCollection = db.collection<Statement>('statements', ref => ref.orderBy('text'));
+    this.statementCollection = db.collection<Statement>('data/prod/statements', ref => ref.orderBy('text'));
   }
 
 
@@ -74,7 +74,7 @@ export class ReferenceEditComponent implements OnInit {
 
     this.sub = this.route.params.subscribe(params => {
       console.log(params['id']);
-      this.referenceDoc = this.db.doc<Reference>('references/' + params['id']);
+      this.referenceDoc = this.db.doc<Reference>('data/prod/references/' + params['id']);
       console.log(this.referenceDoc);
       this.reference = this.referenceDoc.snapshotChanges().pipe(
         map(action => {

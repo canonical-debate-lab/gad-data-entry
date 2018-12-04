@@ -53,7 +53,7 @@ export class ContextEditComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       console.log(params['id']);
       this.svc.selection = params.id;
-      this.contextDoc = this.db.doc<Context>('contexts/' + params['id']);
+      this.contextDoc = this.db.doc<Context>('data/prod/contexts/' + params['id']);
       console.log(this.contextDoc);
       this.context = this.contextDoc.snapshotChanges().pipe(
         map(action => {
